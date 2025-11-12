@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero Banner Section */}
-      <section className="relative h-[600px] md:h-[700px] w-full overflow-hidden">
+      <section className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] w-full overflow-hidden">
         {/* Background Images with transition */}
         {banners.map((banner, index) => (
           <div
@@ -40,33 +40,32 @@ export default function Home() {
           </div>
         ))}
         {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" style={{ zIndex: 1 }}></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" style={{ zIndex: 1 }}></div>
 
         {/* Hero Content */}
         <div className="relative h-full flex items-center" style={{ zIndex: 2 }}>
-          <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16 w-full">
-            <div className="flex items-start" style={{ paddingLeft: '2rem' }}>
-              {/* White vertical line */}
-              <div style={{
-                width: '6px',
-                height: '250px',
+          <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16">
+            <div className="flex items-start gap-3 sm:gap-6 md:gap-8 lg:gap-10">
+              {/* White vertical line - hidden on very small screens */}
+              <div className="hidden sm:block" style={{
+                width: '4px',
+                height: '120px',
                 backgroundColor: '#ffffff',
-                marginRight: '2.5rem',
                 flexShrink: 0
               }}></div>
 
               {/* Text content */}
-              <div>
-                <h1 className="font-black mb-4 md:mb-6 leading-tight uppercase" style={{
-                  fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
+              <div className="flex-1">
+                <h1 className="font-black mb-3 sm:mb-4 md:mb-6 leading-tight uppercase" style={{
+                  fontSize: 'clamp(1.75rem, 5vw, 4.5rem)',
                   letterSpacing: '0.02em',
                   color: '#ffffff'
                 }}>
                   Advanced Wound Care &<br />
                   Limb Preservation
                 </h1>
-                <p className="font-light leading-relaxed" style={{
-                  fontSize: 'clamp(1.125rem, 2vw, 1.5rem)',
+                <p className="font-light leading-relaxed max-w-3xl" style={{
+                  fontSize: 'clamp(0.95rem, 2vw, 1.5rem)',
                   color: '#ffffff'
                 }}>
                   Providing advanced wound healing and limb preservation to help patients stay safe, healthy, and home.
@@ -78,32 +77,32 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="bg-white" style={{ paddingTop: '3rem', paddingBottom: '4rem' }}>
-        <div className="max-w-6xl mx-auto" style={{ paddingLeft: '6rem', paddingRight: '6rem' }}>
-          <div style={{ marginBottom: '2rem' }}>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 inline-block" style={{
+      <section className="bg-white py-8 sm:py-12 md:py-16 lg:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24">
+          <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 inline-block" style={{
               borderBottom: '4px solid #000000',
-              paddingBottom: '1rem'
+              paddingBottom: '0.75rem'
             }}>
               About Stratum Wound Care
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-20 items-start">
             <div>
-              <p className="text-xl text-gray-700 leading-relaxed" style={{ marginBottom: '2rem' }}>
+              <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-6 sm:mb-8">
                 At Stratum Wound Care, we specialize in providing comprehensive wound management services
                 to patients throughout Pennsylvania. Our team of experienced healthcare professionals is
                 dedicated to healing complex wounds and preventing amputations.
               </p>
-              <p className="text-xl text-gray-700 leading-relaxed" style={{ marginBottom: '2rem' }}>
+              <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-6 sm:mb-8">
                 With years of experience in home health and community-based wound care, we understand
                 the unique challenges faced by patients with chronic wounds. Our patient-centered approach
                 combines cutting-edge treatments with compassionate care.
               </p>
             </div>
-            <div className="bg-gray-50 p-10 rounded-2xl shadow-soft">
-              <h3 className="text-3xl font-bold text-gray-900" style={{ marginBottom: '1.5rem' }}>Our Commitment</h3>
+            <div className="bg-gray-50 p-6 sm:p-8 md:p-10 rounded-2xl shadow-soft">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Our Commitment</h3>
               <ul className="space-y-5">
                 <li className="flex items-start">
                   <div className="flex-shrink-0 w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
@@ -144,31 +143,30 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto" style={{ paddingLeft: '4rem', paddingRight: '4rem' }}>
+      <section className="py-12 sm:py-16 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
           <div style={{
             backgroundColor: '#000000',
-            borderRadius: '24px',
-            padding: '4rem',
+            borderRadius: '16px',
+            padding: '2rem',
             boxShadow: '0 8px 30px rgba(0, 0, 0, 0.3)'
-          }}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#ffffff' }}>
+          }} className="sm:p-12 md:p-16 sm:rounded-3xl">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6" style={{ color: '#ffffff' }}>
               Our Specialized Services
             </h2>
-            <p className="text-xl mb-12 max-w-3xl" style={{ color: '#e5e5e5' }}>
+            <p className="text-base sm:text-lg md:text-xl mb-8 sm:mb-12 max-w-3xl" style={{ color: '#e5e5e5' }}>
               Comprehensive wound care solutions tailored to your specific needs
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
               {[
                 { title: "Diabetic Wounds", description: "Specialized care for diabetic foot ulcers and complications", emoji: "🩺" },
                 { title: "Pressure Ulcers", description: "Treatment and prevention of bedsores and pressure injuries", emoji: "🛏️" },
                 { title: "Surgical Wounds", description: "Post-operative wound management and healing optimization", emoji: "⚕️" },
                 { title: "Venous Ulcers", description: "Advanced treatment for venous insufficiency wounds", emoji: "💉" }
               ].map((service, index) => (
-                <div key={index} style={{
+                <div key={index} className="p-4 sm:p-6" style={{
                   backgroundColor: '#1a1a1a',
-                  padding: '1.5rem',
                   borderRadius: '12px',
                   transition: 'all 0.3s'
                 }}
@@ -180,25 +178,20 @@ export default function Home() {
                   e.currentTarget.style.backgroundColor = '#1a1a1a';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}>
-                  <div className="text-5xl mb-4">{service.emoji}</div>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#ffffff' }}>{service.title}</h3>
-                  <p style={{ color: '#d1d1d1' }}>{service.description}</p>
+                  <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">{service.emoji}</div>
+                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3" style={{ color: '#ffffff' }}>{service.title}</h3>
+                  <p className="text-sm sm:text-base" style={{ color: '#d1d1d1' }}>{service.description}</p>
                 </div>
               ))}
             </div>
 
-            <div className="text-center" style={{ marginTop: '3rem' }}>
+            <div className="text-center mt-8 sm:mt-12">
               <Link
                 href="/services"
+                className="inline-block px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-base sm:text-lg transition-all"
                 style={{
-                  display: 'inline-block',
                   backgroundColor: '#ffffff',
-                  color: '#000000',
-                  padding: '1rem 2rem',
-                  borderRadius: '12px',
-                  fontWeight: 'bold',
-                  fontSize: '1.125rem',
-                  transition: 'all 0.3s'
+                  color: '#000000'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = '#f0f0f0';
