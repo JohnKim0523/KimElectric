@@ -1,4 +1,6 @@
 // Simple grayscale SVG icon component
+import React from 'react';
+
 interface IconProps {
   type: string;
   size?: number;
@@ -6,7 +8,7 @@ interface IconProps {
 }
 
 export default function Icon({ type, size = 24, color = '#6b7280' }: IconProps) {
-  const icons: { [key: string]: JSX.Element } = {
+  const icons: { [key: string]: React.ReactElement } = {
     calendar: (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
