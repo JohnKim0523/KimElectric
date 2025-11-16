@@ -63,12 +63,12 @@ export default function Home() {
 
   return (
     <PageTransition>
-      <div style={{ paddingTop: isMobile ? '2rem' : '2.5rem' }}>
+      <div style={{ paddingTop: isMobile ? '7rem' : '2.5rem' }}>
         {/* Hero Banner Section */}
         <section
           className="relative w-full"
           style={{
-            minHeight: isMobile ? '70vh' : '75vh',
+            minHeight: isMobile ? '78vh' : '82vh',
             position: 'relative',
             overflow: 'hidden'
           }}
@@ -82,7 +82,7 @@ export default function Home() {
               right: 0,
               bottom: 0,
               backgroundImage: 'url(/banner1.webp)',
-              backgroundSize: 'cover',
+              backgroundSize: '110% auto',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'
             }}
@@ -93,7 +93,7 @@ export default function Home() {
           <div
             className="relative z-10"
             style={{
-              minHeight: isMobile ? '70vh' : '75vh',
+              minHeight: isMobile ? '78vh' : '82vh',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
