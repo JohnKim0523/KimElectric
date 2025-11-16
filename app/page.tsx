@@ -10,6 +10,8 @@ export default function Home() {
   const [windowWidth, setWindowWidth] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHoveringCarousel, setIsHoveringCarousel] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -59,6 +61,33 @@ export default function Home() {
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
+  };
+
+  // Touch handlers for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    }
+    if (isRightSwipe) {
+      prevSlide();
+    }
+
+    setTouchStart(0);
+    setTouchEnd(0);
   };
 
   return (
@@ -173,6 +202,9 @@ export default function Home() {
               className="carousel-container"
               onMouseEnter={() => setIsHoveringCarousel(true)}
               onMouseLeave={() => setIsHoveringCarousel(false)}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               {/* Slides Container */}
               <div
