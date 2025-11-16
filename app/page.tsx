@@ -63,14 +63,15 @@ export default function Home() {
 
   return (
     <PageTransition>
-      <div style={{ paddingTop: isMobile ? '7rem' : '2.5rem' }}>
+      <div>
         {/* Hero Banner Section */}
         <section
           className="relative w-full"
           style={{
-            minHeight: isMobile ? '78vh' : '82vh',
+            minHeight: isMobile ? '100vh' : '82vh',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            paddingTop: isMobile ? '7.5rem' : '0'
           }}
         >
           {/* Background Image */}
@@ -93,12 +94,12 @@ export default function Home() {
           <div
             className="relative z-10"
             style={{
-              minHeight: isMobile ? '78vh' : '82vh',
+              minHeight: isMobile ? 'calc(100vh - 7.5rem)' : '82vh',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              padding: isMobile ? '6rem 1.5rem 2rem' : '7rem 3rem 3rem'
+              padding: isMobile ? '2rem 1.5rem 2rem' : '7rem 3rem 3rem'
             }}
           >
             {/* Hero Content */}
