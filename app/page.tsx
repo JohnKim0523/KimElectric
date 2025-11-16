@@ -71,8 +71,9 @@ export default function Home() {
             minHeight: isMobile ? '85vh' : '82vh',
             position: 'relative',
             overflow: 'hidden',
-            paddingTop: isMobile ? '8rem' : '0',
-            marginTop: isMobile ? '-0.5rem' : '0'
+            paddingTop: isMobile ? '9rem' : '0',
+            marginTop: isMobile ? '-1rem' : '0',
+            backgroundColor: '#f5f5f5'
           }}
         >
           {/* Background Image */}
@@ -84,7 +85,7 @@ export default function Home() {
               right: 0,
               bottom: 0,
               backgroundImage: 'url(/banner1.webp)',
-              backgroundSize: '110% auto',
+              backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'
             }}
@@ -95,7 +96,7 @@ export default function Home() {
           <div
             className="relative z-10"
             style={{
-              minHeight: isMobile ? 'calc(85vh - 8rem)' : '82vh',
+              minHeight: isMobile ? 'calc(85vh - 9rem)' : '82vh',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
