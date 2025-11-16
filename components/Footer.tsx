@@ -7,21 +7,8 @@ import { colors } from '@/lib/colors';
 export default function Footer() {
   return (
     <footer style={{ backgroundColor: colors.primary.navy, color: colors.primary.white }}>
-      <div style={{
-        maxWidth: '1200px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        paddingLeft: '2rem',
-        paddingRight: '2rem',
-        paddingTop: '3rem',
-        paddingBottom: '2rem'
-      }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '3rem',
-          marginBottom: '2.5rem'
-        }}>
+      <div className="container-responsive" style={{ paddingTop: '3rem', paddingBottom: '2rem' }}>
+        <div className="footer-grid">
           {/* Company Info */}
           <div>
             <Image

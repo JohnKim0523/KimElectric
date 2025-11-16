@@ -45,37 +45,37 @@ export default function Navbar() {
     { href: '/contact', label: 'Contact Us' },
   ];
 
+  // Determine logo class based on mobile/desktop and scroll state
+  const getLogoClass = () => {
+    if (isMobile) {
+      if (isHomePage) {
+        return isScrolled ? 'navbar-logo-mobile-scrolled' : 'navbar-logo-mobile';
+      }
+      return isScrolled ? 'navbar-logo-mobile-page-scrolled' : 'navbar-logo-mobile-page';
+    } else {
+      if (isHomePage) {
+        return isScrolled ? 'navbar-logo-desktop-scrolled' : 'navbar-logo-desktop';
+      }
+      return isScrolled ? 'navbar-logo-desktop-page-scrolled' : 'navbar-logo-desktop-page';
+    }
+  };
+
   return (
     <div
-      className="fixed left-0 right-0 z-50 w-full transition-all duration-300"
+      className="navbar-container"
       style={{
-        top: isScrolled ? `-${isMobile ? '2rem' : '2.5rem'}` : '0'
+        top: isScrolled ? (isMobile ? '-2rem' : '-2.5rem') : '0'
       }}
     >
       {/* Info Header Bar */}
-      <div
-        className="w-full text-center"
-        style={{
-          backgroundColor: colors.secondary.darkNavy,
-          color: colors.primary.white,
-          fontSize: isMobile ? '0.75rem' : '0.875rem',
-          fontWeight: '500',
-          letterSpacing: '0.5px',
-          padding: isMobile ? '0.5rem 1rem' : '0.75rem 1rem',
-          height: isMobile ? '2rem' : '2.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
+      <div className="navbar-info-bar">
         Fire Alarm Systems and Monitoring - Electric - Construction
       </div>
 
       {/* Main Navigation */}
       <nav
-        className="w-full transition-all duration-300"
+        className="navbar-main"
         style={{
-          backgroundColor: '#F5F7FA',
           ...(isHomePage
             ? {
                 height: isMobile
@@ -90,178 +90,102 @@ export default function Navbar() {
                   ? (isScrolled ? '0.2rem 1.5rem' : '0.25rem 1.5rem')
                   : (isScrolled ? '0.25rem 3rem' : '0.35rem 3rem')
               }
-          ),
-          boxShadow: '0 3px 12px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08)',
-          borderBottom: '1px solid #E5E7EB'
+          )
         }}
       >
-      <div className="max-w-7xl mx-auto flex items-center justify-between w-full" style={isHomePage ? { height: '100%' } : {}}>
-        {!isMobile ? (
-          // Desktop Layout: Left links, Logo in center, Right links
-          <>
-            {/* Left Side - Navigation Links */}
-            <div
-              className="flex items-center"
-              style={{
-                gap: '2rem',
-                flex: 1
-              }}
-            >
-              {leftNavLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="font-semibold transition-colors duration-300 whitespace-nowrap"
-                    style={{
-                      color: isActive ? colors.primary.navy : '#6B7280',
-                      fontSize: '1rem',
-                      borderBottom: isActive ? `3px solid ${colors.primary.navy}` : 'none',
-                      paddingBottom: '0.25rem',
-                      textDecoration: 'none'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isActive) {
-                        e.currentTarget.style.color = colors.primary.navy;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isActive) {
-                        e.currentTarget.style.color = '#6B7280';
-                      }
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
+        <div className="max-w-7xl mx-auto flex items-center justify-between w-full" style={isHomePage ? { height: '100%' } : {}}>
+          {!isMobile ? (
+            // Desktop Layout: Left links, Logo in center, Right links
+            <>
+              {/* Left Side - Navigation Links */}
+              <div className="navbar-links" style={{ flex: 1 }}>
+                {leftNavLinks.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`navbar-link ${isActive ? 'navbar-link-active' : ''}`}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
 
-            {/* Center - Logo */}
-            <Link
-              href="/"
-              className="flex items-center"
-              style={{
-                flex: '0 0 auto',
-                alignSelf: 'flex-start',
-                marginBottom: isHomePage ? '-35px' : '0'
-              }}
-            >
-              <Image
-                src="/logo1.webp"
-                alt="Kim Electric LLC"
-                width={600}
-                height={600}
+              {/* Center - Logo */}
+              <Link
+                href="/"
+                className="flex items-center"
                 style={{
-                  objectFit: 'contain',
-                  height: isHomePage
-                    ? (isScrolled ? '75px' : '180px')
-                    : (isScrolled ? '70px' : '85px'),
-                  width: 'auto',
-                  transition: 'height 0.3s ease',
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))'
+                  flex: '0 0 auto',
+                  alignSelf: 'flex-start',
+                  marginBottom: isHomePage ? '-35px' : '0'
                 }}
-                priority
-                quality={100}
-              />
-            </Link>
+              >
+                <Image
+                  src="/logo1.webp"
+                  alt="Kim Electric LLC"
+                  width={600}
+                  height={600}
+                  className={`navbar-logo ${getLogoClass()}`}
+                  priority
+                />
+              </Link>
 
-            {/* Right Side - Navigation Links */}
-            <div
-              className="flex items-center"
-              style={{
-                gap: '2rem',
-                flex: 1,
-                justifyContent: 'flex-end'
-              }}
-            >
-              {rightNavLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="font-semibold transition-colors duration-300 whitespace-nowrap"
-                    style={{
-                      color: isActive ? colors.primary.navy : '#6B7280',
-                      fontSize: '1rem',
-                      borderBottom: isActive ? `3px solid ${colors.primary.navy}` : 'none',
-                      paddingBottom: '0.25rem',
-                      textDecoration: 'none'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isActive) {
-                        e.currentTarget.style.color = colors.primary.navy;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isActive) {
-                        e.currentTarget.style.color = '#6B7280';
-                      }
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          // Mobile Layout
-          <>
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/logo1.webp"
-                alt="Kim Electric LLC"
-                width={500}
-                height={500}
-                style={{
-                  objectFit: 'contain',
-                  height: isHomePage
-                    ? (isScrolled ? '50px' : '110px')
-                    : (isScrolled ? '60px' : '75px'),
-                  width: 'auto',
-                  transition: 'height 0.3s ease',
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))'
-                }}
-                priority
-                quality={100}
-              />
-            </Link>
+              {/* Right Side - Navigation Links */}
+              <div className="navbar-links" style={{ flex: 1, justifyContent: 'flex-end' }}>
+                {rightNavLinks.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`navbar-link ${isActive ? 'navbar-link-active' : ''}`}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            // Mobile Layout
+            <>
+              <Link href="/" className="flex items-center">
+                <Image
+                  src="/logo1.webp"
+                  alt="Kim Electric LLC"
+                  width={500}
+                  height={500}
+                  className={`navbar-logo ${getLogoClass()}`}
+                  priority
+                />
+              </Link>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-2xl ml-auto"
-              style={{ color: colors.primary.navy }}
-            >
-              {isMobileMenuOpen ? '✕' : '☰'}
-            </button>
-          </>
-        )}
-      </div>
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="navbar-mobile-menu"
+                aria-label="Toggle mobile menu"
+              >
+                {isMobileMenuOpen ? '✕' : '☰'}
+              </button>
+            </>
+          )}
+        </div>
 
-      {/* Mobile Menu */}
-      {isMobile && isMobileMenuOpen && (
-        <div
-          className="mt-4 pt-4 border-t"
-          style={{
-            backgroundColor: '#F5F7FA',
-            borderColor: '#E5E7EB'
-          }}
-        >
-          <div className="flex flex-col gap-3">
+        {/* Mobile Menu */}
+        {isMobile && isMobileMenuOpen && (
+          <div className="navbar-mobile-dropdown">
             {[...leftNavLinks, ...rightNavLinks].map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="font-semibold transition-colors"
-                  style={{
-                    color: isActive ? colors.primary.navy : '#6B7280'
-                  }}
+                  className={`navbar-link ${isActive ? 'navbar-link-active' : ''}`}
+                  style={{ color: isActive ? colors.primary.navy : '#6B7280' }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
@@ -269,9 +193,8 @@ export default function Navbar() {
               );
             })}
           </div>
-        </div>
-      )}
-    </nav>
+        )}
+      </nav>
     </div>
   );
 }

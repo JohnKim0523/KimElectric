@@ -1,11 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PageTransition from '@/components/PageTransition';
 import { colors } from '@/lib/colors';
 
 export default function ContactPage() {
-  const [windowWidth, setWindowWidth] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,15 +15,6 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isMobile = windowWidth < 768;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -71,84 +61,37 @@ export default function ContactPage() {
       <div>
         {/* Header Section */}
         <section
+          className="header-spacing text-center"
           style={{
-            paddingTop: isMobile ? '180px' : '210px',
-            paddingBottom: isMobile ? '3rem' : '4rem',
             backgroundColor: colors.primary.navy,
-            color: colors.primary.white,
-            textAlign: 'center'
+            color: colors.primary.white
           }}
         >
-          <div
-            style={{
-              paddingLeft: isMobile ? '1.5rem' : '3rem',
-              paddingRight: isMobile ? '1.5rem' : '3rem',
-              maxWidth: '1200px',
-              marginLeft: 'auto',
-              marginRight: 'auto'
-            }}
-          >
-            <h1
-              className="font-bold mb-4"
-              style={{
-                fontSize: isMobile ? '2.5rem' : '4rem'
-              }}
-            >
+          <div className="container-responsive">
+            <h1 className="heading-xl font-bold mb-4">
               Work with Us
             </h1>
-            <p
-              style={{
-                fontSize: isMobile ? '1.125rem' : '1.5rem',
-                maxWidth: '800px',
-                margin: '0 auto'
-              }}
-            >
+            <p className="text-lg max-w-responsive-sm mx-auto">
               Get in touch for fire protection services
             </p>
           </div>
         </section>
 
         {/* Contact Form & Info Section */}
-        <section
-          style={{
-            paddingTop: isMobile ? '3rem' : '5rem',
-            paddingBottom: isMobile ? '3rem' : '5rem',
-            backgroundColor: colors.neutral.offWhite
-          }}
-        >
-          <div
-            style={{
-              paddingLeft: isMobile ? '1.5rem' : '3rem',
-              paddingRight: isMobile ? '1.5rem' : '3rem',
-              maxWidth: '1200px',
-              marginLeft: 'auto',
-              marginRight: 'auto'
-            }}
-          >
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-                gap: isMobile ? '3rem' : '4rem'
-              }}
-            >
+        <section className="section-padding" style={{ backgroundColor: colors.neutral.offWhite }}>
+          <div className="container-responsive">
+            <div className="grid-responsive-2 gap-responsive">
               {/* Contact Form */}
               <div
+                className="card-padding"
                 style={{
                   backgroundColor: colors.primary.white,
                   borderRadius: '4px',
-                  padding: isMobile ? '2rem' : '3rem',
                   border: `2px solid ${colors.secondary.borderGray}`,
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
                 }}
               >
-                <h2
-                  className="font-bold mb-4"
-                  style={{
-                    fontSize: isMobile ? '2rem' : '2.5rem',
-                    color: colors.primary.navy
-                  }}
-                >
+                <h2 className="heading-sm font-bold mb-4" style={{ color: colors.primary.navy }}>
                   Send Message
                 </h2>
 
@@ -172,14 +115,6 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       placeholder="Name"
-                      style={{
-                        width: '100%',
-                        padding: '0.75rem 1rem',
-                        border: `1px solid ${colors.secondary.borderGray}`,
-                        borderRadius: '4px',
-                        fontSize: '1rem',
-                        outline: 'none'
-                      }}
                     />
                   </div>
 
@@ -201,15 +136,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      placeholder="Email*"
-                      style={{
-                        width: '100%',
-                        padding: '0.75rem 1rem',
-                        border: `1px solid ${colors.secondary.borderGray}`,
-                        borderRadius: '4px',
-                        fontSize: '1rem',
-                        outline: 'none'
-                      }}
+                      placeholder="Email"
                     />
                   </div>
 
@@ -232,14 +159,6 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       placeholder="Phone"
-                      style={{
-                        width: '100%',
-                        padding: '0.75rem 1rem',
-                        border: `1px solid ${colors.secondary.borderGray}`,
-                        borderRadius: '4px',
-                        fontSize: '1rem',
-                        outline: 'none'
-                      }}
                     />
                   </div>
 
@@ -261,14 +180,6 @@ export default function ContactPage() {
                       value={formData.address}
                       onChange={handleChange}
                       placeholder="Address (Street, City, Zip Code)"
-                      style={{
-                        width: '100%',
-                        padding: '0.75rem 1rem',
-                        border: `1px solid ${colors.secondary.borderGray}`,
-                        borderRadius: '4px',
-                        fontSize: '1rem',
-                        outline: 'none'
-                      }}
                     />
                   </div>
 
@@ -290,41 +201,16 @@ export default function ContactPage() {
                       onChange={handleChange}
                       rows={5}
                       placeholder="Message"
-                      style={{
-                        width: '100%',
-                        padding: '0.75rem 1rem',
-                        border: `1px solid ${colors.secondary.borderGray}`,
-                        borderRadius: '4px',
-                        fontSize: '1rem',
-                        outline: 'none',
-                        resize: 'vertical',
-                        fontFamily: 'inherit'
-                      }}
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
+                    className="btn-primary"
                     style={{
-                      backgroundColor: colors.primary.navy,
-                      color: colors.primary.white,
-                      padding: '1rem 2rem',
-                      borderRadius: '4px',
-                      fontWeight: 'bold',
-                      fontSize: '1rem',
-                      border: 'none',
-                      cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                      transition: 'all 0.3s',
-                      opacity: isSubmitting ? 0.7 : 1
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSubmitting) {
-                        e.currentTarget.style.backgroundColor = colors.secondary.darkNavy;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = colors.primary.navy;
+                      opacity: isSubmitting ? 0.7 : 1,
+                      cursor: isSubmitting ? 'not-allowed' : 'pointer'
                     }}
                   >
                     {isSubmitting ? 'Sending...' : 'Send'}
@@ -379,21 +265,14 @@ export default function ContactPage() {
 
               {/* Contact Information */}
               <div>
-                <h2
-                  className="font-bold mb-4"
-                  style={{
-                    fontSize: isMobile ? '1.75rem' : '2rem',
-                    color: colors.primary.navy
-                  }}
-                >
+                <h2 className="heading-sm font-bold mb-4" style={{ color: colors.primary.navy }}>
                   Call For A Free Quote!
                 </h2>
                 <p
+                  className="text-base mb-responsive-lg"
                   style={{
-                    fontSize: isMobile ? '0.9375rem' : '1rem',
                     color: colors.secondary.mediumGray,
-                    lineHeight: '1.7',
-                    marginBottom: '2rem'
+                    lineHeight: '1.7'
                   }}
                 >
                   We strive to be in constant communication with our customers. To get a free quote, or if you have questions or special requests, just drop us an email or text. We look forward to working with you.
@@ -401,16 +280,10 @@ export default function ContactPage() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                   <div>
-                    <h3
-                      className="font-bold mb-3"
-                      style={{
-                        fontSize: isMobile ? '1.25rem' : '1.5rem',
-                        color: colors.primary.navy
-                      }}
-                    >
+                    <h3 className="heading-sm font-bold mb-3" style={{ color: colors.primary.navy, fontSize: '1.25rem' }}>
                       Kim Electric LLC.
                     </h3>
-                    <div style={{ fontSize: isMobile ? '0.9375rem' : '1rem', color: colors.secondary.mediumGray, lineHeight: '1.8' }}>
+                    <div className="text-base" style={{ color: colors.secondary.mediumGray, lineHeight: '1.8' }}>
                       <p style={{ marginBottom: '0.75rem' }}>
                         <strong>Mailing Address:</strong> 74 W. Edsall Blvd. #B, Palisades Park, New Jersey 07650, United States
                       </p>
@@ -428,16 +301,10 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <h3
-                      className="font-bold mb-3"
-                      style={{
-                        fontSize: isMobile ? '1.25rem' : '1.5rem',
-                        color: colors.primary.navy
-                      }}
-                    >
+                    <h3 className="heading-sm font-bold mb-3" style={{ color: colors.primary.navy, fontSize: '1.25rem' }}>
                       Hours
                     </h3>
-                    <div style={{ fontSize: isMobile ? '0.9375rem' : '1rem', color: colors.secondary.mediumGray, lineHeight: '1.8' }}>
+                    <div className="text-base" style={{ color: colors.secondary.mediumGray, lineHeight: '1.8' }}>
                       <p style={{ marginBottom: '0.5rem' }}>Monday - Friday: 8am - 6pm</p>
                       <p>Saturday - Sunday: Closed</p>
                     </div>
@@ -449,36 +316,21 @@ export default function ContactPage() {
         </section>
 
         {/* Payment Information Section */}
-        <section
-          style={{
-            paddingTop: isMobile ? '3rem' : '4rem',
-            paddingBottom: isMobile ? '3rem' : '4rem',
-            backgroundColor: colors.neutral.offWhite
-          }}
-        >
-          <div
-            style={{
-              paddingLeft: isMobile ? '1.5rem' : '3rem',
-              paddingRight: isMobile ? '1.5rem' : '3rem',
-              maxWidth: '1200px',
-              marginLeft: 'auto',
-              marginRight: 'auto'
-            }}
-          >
+        <section className="section-padding" style={{ backgroundColor: colors.neutral.offWhite }}>
+          <div className="container-responsive">
             <div
+              className="card-padding text-center"
               style={{
                 backgroundColor: colors.primary.white,
-                padding: isMobile ? '2rem' : '3rem',
                 borderRadius: '4px',
                 border: `2px solid ${colors.secondary.borderGray}`,
                 borderLeft: `6px solid ${colors.primary.navy}`,
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
-                textAlign: 'center'
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
               }}
             >
               <p
+                className="text-base"
                 style={{
-                  fontSize: isMobile ? '0.9375rem' : '1rem',
                   color: colors.secondary.mediumGray,
                   lineHeight: '1.7'
                 }}
@@ -494,40 +346,12 @@ export default function ContactPage() {
         </section>
 
         {/* Licensing Section */}
-        <section
-          style={{
-            paddingTop: isMobile ? '3rem' : '4rem',
-            paddingBottom: isMobile ? '3rem' : '4rem',
-            backgroundColor: colors.primary.navy,
-            color: colors.primary.white
-          }}
-        >
-          <div
-            style={{
-              paddingLeft: isMobile ? '1.5rem' : '3rem',
-              paddingRight: isMobile ? '1.5rem' : '3rem',
-              maxWidth: '1200px',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              textAlign: 'center'
-            }}
-          >
-            <h2
-              className="font-bold mb-6"
-              style={{
-                fontSize: isMobile ? '1.75rem' : '2.5rem'
-              }}
-            >
+        <section className="section-padding text-center" style={{ backgroundColor: colors.primary.navy, color: colors.primary.white }}>
+          <div className="container-responsive">
+            <h2 className="heading-md font-bold mb-6">
               Licensed & Certified
             </h2>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-                fontSize: isMobile ? '1rem' : '1.125rem'
-              }}
-            >
+            <div className="text-md" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <p>State of New Jersey Fire Protection Contractor Permit No. P01654</p>
               <p>NJ HIC License No. 13VH12649700</p>
             </div>

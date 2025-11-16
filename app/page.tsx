@@ -68,7 +68,7 @@ export default function Home() {
         <section
           className="relative w-full"
           style={{
-            minHeight: isMobile ? '82vh' : '88vh',
+            minHeight: isMobile ? '70vh' : '75vh',
             position: 'relative',
             overflow: 'hidden'
           }}
@@ -93,7 +93,7 @@ export default function Home() {
           <div
             className="relative z-10"
             style={{
-              minHeight: isMobile ? '82vh' : '88vh',
+              minHeight: isMobile ? '70vh' : '75vh',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
@@ -104,25 +104,23 @@ export default function Home() {
             {/* Hero Content */}
             <div className="text-center">
               <h1
-                className="font-bold leading-tight"
+                className="heading-hero font-bold leading-tight mb-responsive"
                 style={{
-                  fontSize: isMobile ? '3rem' : '5rem',
                   color: colors.primary.white,
                   textShadow: '2px 2px 8px rgba(0,0,0,0.3)',
-                  letterSpacing: '-0.02em',
-                  marginBottom: isMobile ? '1rem' : '1.5rem'
+                  letterSpacing: '-0.02em'
                 }}
               >
                 Fire Protection
               </h1>
               {/* Decorative divider line */}
               <div
+                className="mb-responsive"
                 style={{
                   width: isMobile ? '80px' : '120px',
                   height: '3px',
                   backgroundColor: colors.primary.white,
                   margin: '0 auto',
-                  marginBottom: isMobile ? '1rem' : '1.5rem',
                   boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
                 }}
               />
@@ -143,9 +141,8 @@ export default function Home() {
 
         {/* Featured Project Section - Carousel */}
         <section
+          className="section-padding"
           style={{
-            paddingTop: isMobile ? '3rem' : '5rem',
-            paddingBottom: isMobile ? '3rem' : '5rem',
             backgroundColor: colors.neutral.offWhite,
             overflow: 'hidden'
           }}
@@ -160,11 +157,9 @@ export default function Home() {
             }}
           >
             <h2
-              className="font-bold text-center"
+              className="heading-lg font-bold text-center mb-responsive-lg"
               style={{
-                fontSize: isMobile ? '2rem' : '3rem',
-                color: colors.primary.navy,
-                marginBottom: isMobile ? '3rem' : '4rem'
+                color: colors.primary.navy
               }}
             >
               Notable Projects
@@ -172,13 +167,7 @@ export default function Home() {
 
             {/* Carousel Container */}
             <div
-              style={{
-                position: 'relative',
-                height: isMobile ? '500px' : '650px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
+              className="carousel-container"
               onMouseEnter={() => setIsHoveringCarousel(true)}
               onMouseLeave={() => setIsHoveringCarousel(false)}
             >
@@ -309,24 +298,6 @@ export default function Home() {
                               subtext={project.description}
                             />
                           )}
-                          {project.comingSoon && isActive && (
-                            <div
-                              style={{
-                                position: 'absolute',
-                                top: '1.5rem',
-                                right: '1.5rem',
-                                backgroundColor: 'rgba(255, 193, 7, 0.95)',
-                                color: colors.primary.navy,
-                                padding: '0.5rem 1rem',
-                                borderRadius: '6px',
-                                fontWeight: 'bold',
-                                fontSize: isMobile ? '0.875rem' : '1rem',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
-                              }}
-                            >
-                              Coming Soon
-                            </div>
-                          )}
                         </div>
 
                         {/* Text Container */}
@@ -374,21 +345,8 @@ export default function Home() {
               {/* Previous Button - Only visible on hover */}
               <button
                 onClick={prevSlide}
+                className="carousel-button carousel-button-prev"
                 style={{
-                  position: 'absolute',
-                  left: isMobile ? '0.5rem' : '2rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  width: isMobile ? '45px' : '60px',
-                  height: isMobile ? '45px' : '60px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'all 0.3s',
-                  zIndex: 20,
                   opacity: isHoveringCarousel ? 0.8 : 0,
                   pointerEvents: isHoveringCarousel ? 'auto' : 'none'
                 }}
@@ -421,21 +379,8 @@ export default function Home() {
               {/* Next Button - Only visible on hover */}
               <button
                 onClick={nextSlide}
+                className="carousel-button carousel-button-next"
                 style={{
-                  position: 'absolute',
-                  right: isMobile ? '0.5rem' : '2rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  width: isMobile ? '45px' : '60px',
-                  height: isMobile ? '45px' : '60px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'all 0.3s',
-                  zIndex: 20,
                   opacity: isHoveringCarousel ? 0.8 : 0,
                   pointerEvents: isHoveringCarousel ? 'auto' : 'none'
                 }}
@@ -468,11 +413,11 @@ export default function Home() {
 
             {/* Project Counter */}
             <div
+              className="text-md"
               style={{
                 textAlign: 'center',
                 marginTop: '2rem',
                 color: colors.secondary.mediumGray,
-                fontSize: isMobile ? '0.875rem' : '1rem',
                 fontWeight: '500'
               }}
             >
@@ -483,34 +428,19 @@ export default function Home() {
 
         {/* Features Section */}
         <section
+          className="section-padding"
           style={{
-            paddingTop: isMobile ? '3rem' : '5rem',
-            paddingBottom: isMobile ? '3rem' : '5rem',
             backgroundColor: colors.primary.white
           }}
         >
-          <div
-            style={{
-              paddingLeft: isMobile ? '1.5rem' : '3rem',
-              paddingRight: isMobile ? '1.5rem' : '3rem',
-              maxWidth: '1200px',
-              marginLeft: 'auto',
-              marginRight: 'auto'
-            }}
-          >
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-                gap: isMobile ? '2rem' : '3rem'
-              }}
-            >
+          <div className="container-responsive">
+            <div className="grid-responsive-3">
               {/* Licensed & Insured */}
               <div
+                className="card-padding"
                 style={{
                   backgroundColor: colors.neutral.offWhite,
                   borderRadius: '12px',
-                  padding: isMobile ? '2rem' : '2.5rem',
                   textAlign: 'center',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
                 }}
@@ -532,17 +462,16 @@ export default function Home() {
                   ✓
                 </div>
                 <h3
-                  className="font-bold mb-3"
+                  className="heading-sm font-bold mb-3"
                   style={{
-                    fontSize: isMobile ? '1.25rem' : '1.5rem',
                     color: colors.primary.navy
                   }}
                 >
                   Licensed & Insured
                 </h3>
                 <p
+                  className="text-base"
                   style={{
-                    fontSize: isMobile ? '0.875rem' : '1rem',
                     color: colors.secondary.mediumGray,
                     lineHeight: '1.6'
                   }}
@@ -553,10 +482,10 @@ export default function Home() {
 
               {/* Experience */}
               <div
+                className="card-padding"
                 style={{
                   backgroundColor: colors.neutral.offWhite,
                   borderRadius: '12px',
-                  padding: isMobile ? '2rem' : '2.5rem',
                   textAlign: 'center',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
                 }}
@@ -578,17 +507,16 @@ export default function Home() {
                   ★
                 </div>
                 <h3
-                  className="font-bold mb-3"
+                  className="heading-sm font-bold mb-3"
                   style={{
-                    fontSize: isMobile ? '1.25rem' : '1.5rem',
                     color: colors.primary.navy
                   }}
                 >
                   Industry Experience
                 </h3>
                 <p
+                  className="text-base"
                   style={{
-                    fontSize: isMobile ? '0.875rem' : '1rem',
                     color: colors.secondary.mediumGray,
                     lineHeight: '1.6'
                   }}
@@ -599,10 +527,10 @@ export default function Home() {
 
               {/* Quality Service */}
               <div
+                className="card-padding"
                 style={{
                   backgroundColor: colors.neutral.offWhite,
                   borderRadius: '12px',
-                  padding: isMobile ? '2rem' : '2.5rem',
                   textAlign: 'center',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
                 }}
@@ -624,17 +552,16 @@ export default function Home() {
                   ♥
                 </div>
                 <h3
-                  className="font-bold mb-3"
+                  className="heading-sm font-bold mb-3"
                   style={{
-                    fontSize: isMobile ? '1.25rem' : '1.5rem',
                     color: colors.primary.navy
                   }}
                 >
                   Quality Customer Service
                 </h3>
                 <p
+                  className="text-base"
                   style={{
-                    fontSize: isMobile ? '0.875rem' : '1rem',
                     color: colors.secondary.mediumGray,
                     lineHeight: '1.6'
                   }}
@@ -648,37 +575,29 @@ export default function Home() {
 
         {/* Licensing Information */}
         <section
+          className="section-padding"
           style={{
-            paddingTop: isMobile ? '3rem' : '4rem',
-            paddingBottom: isMobile ? '3rem' : '4rem',
             backgroundColor: colors.primary.navy,
             color: colors.primary.white
           }}
         >
           <div
+            className="container-responsive"
             style={{
-              paddingLeft: isMobile ? '1.5rem' : '3rem',
-              paddingRight: isMobile ? '1.5rem' : '3rem',
-              maxWidth: '1200px',
-              marginLeft: 'auto',
-              marginRight: 'auto',
               textAlign: 'center'
             }}
           >
             <h2
-              className="font-bold mb-6"
-              style={{
-                fontSize: isMobile ? '1.75rem' : '2.5rem'
-              }}
+              className="heading-md font-bold mb-6"
             >
               Licensed & Certified
             </h2>
             <div
+              className="text-md"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '1rem',
-                fontSize: isMobile ? '1rem' : '1.125rem',
                 maxWidth: '800px',
                 margin: '0 auto'
               }}
@@ -690,13 +609,7 @@ export default function Home() {
         </section>
 
         {/* Contact CTA Section */}
-        <section
-          style={{
-            paddingTop: isMobile ? '4rem' : '6rem',
-            paddingBottom: isMobile ? '4rem' : '6rem',
-            backgroundColor: colors.neutral.offWhite
-          }}
-        >
+        <section className="section-padding-lg" style={{ backgroundColor: colors.neutral.offWhite }}>
           <div
             style={{
               paddingLeft: isMobile ? '1.5rem' : '3rem',
@@ -708,18 +621,16 @@ export default function Home() {
             }}
           >
             <h2
-              className="font-bold mb-4"
+              className="heading-lg font-bold mb-4"
               style={{
-                fontSize: isMobile ? '2rem' : '3rem',
                 color: colors.primary.navy
               }}
             >
               Need Fire Protection Services?
             </h2>
             <p
-              className="mb-8"
+              className="text-lg mb-8"
               style={{
-                fontSize: isMobile ? '1.125rem' : '1.25rem',
                 color: colors.secondary.mediumGray,
                 lineHeight: '1.6'
               }}
@@ -748,25 +659,10 @@ export default function Home() {
             </p>
             <Link
               href="/contact"
+              className="btn-primary"
               style={{
-                display: 'inline-block',
-                backgroundColor: colors.primary.navy,
-                color: colors.primary.white,
-                padding: isMobile ? '1rem 2rem' : '1.25rem 3rem',
-                borderRadius: '8px',
-                fontSize: isMobile ? '1rem' : '1.125rem',
-                fontWeight: 'bold',
-                textDecoration: 'none',
-                transition: 'all 0.3s',
-                boxShadow: '0 4px 12px rgba(39, 52, 70, 0.3)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = colors.secondary.darkNavy;
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = colors.primary.navy;
-                e.currentTarget.style.transform = 'translateY(0)';
+                boxShadow: '0 4px 12px rgba(39, 52, 70, 0.3)',
+                color: colors.primary.white
               }}
             >
               Contact Us
