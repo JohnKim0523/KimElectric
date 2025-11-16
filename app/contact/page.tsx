@@ -69,7 +69,7 @@ export default function ContactPage() {
         >
           <div className="container-responsive">
             <h1 className="heading-xl font-bold mb-4">
-              Work with Us
+              Contact Us
             </h1>
             <p className="text-lg max-w-responsive-sm mx-auto">
               Get in touch for fire protection services

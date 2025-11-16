@@ -68,10 +68,11 @@ export default function Home() {
         <section
           className="relative w-full"
           style={{
-            minHeight: isMobile ? '100vh' : '82vh',
+            minHeight: isMobile ? '85vh' : '82vh',
             position: 'relative',
             overflow: 'hidden',
-            paddingTop: isMobile ? '7.5rem' : '0'
+            paddingTop: isMobile ? '8rem' : '0',
+            marginTop: isMobile ? '-0.5rem' : '0'
           }}
         >
           {/* Background Image */}
@@ -94,12 +95,12 @@ export default function Home() {
           <div
             className="relative z-10"
             style={{
-              minHeight: isMobile ? 'calc(100vh - 7.5rem)' : '82vh',
+              minHeight: isMobile ? 'calc(85vh - 8rem)' : '82vh',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              padding: isMobile ? '2rem 1.5rem 2rem' : '7rem 3rem 3rem'
+              padding: isMobile ? '4rem 1.5rem 2rem' : '9rem 3rem 3rem'
             }}
           >
             {/* Hero Content */}

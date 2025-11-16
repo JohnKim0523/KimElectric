@@ -12,10 +12,10 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <Image
-              src="/logo.png"
+              src="/logo1.webp"
               alt="Kim Electric LLC"
               width={140}
-              height={47}
+              height={140}
               style={{
                 objectFit: 'contain',
                 marginBottom: '1rem'
