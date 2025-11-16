@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  weight: ['400', '500', '700', '900'],
+  subsets: ["latin"]
+});
 
 export const metadata: Metadata = {
-  title: "Stratum Wound Care - Advanced Wound Healing in Pennsylvania",
-  description: "Providing advanced wound healing and limb preservation to help patients stay safe, healthy, and home. Specialized care for diabetic wounds, pressure ulcers, and more.",
-  keywords: "wound care, Pennsylvania, diabetic wounds, pressure ulcers, surgical wounds, limb preservation",
+  title: "Kim Electric LLC - Fire Protection Commercial & Residential",
+  description: "Licensed fire protection contractor serving New Jersey. State of NJ Fire Protection Contractor Permit No. P01654. Commercial and residential fire alarm systems and monitoring.",
+  keywords: "fire protection, fire alarm, commercial electrical, residential electrical, New Jersey, NJ contractor, fire alarm monitoring",
 };
 
 export default function RootLayout({
@@ -19,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={roboto.className}>
         <Navbar />
         <main className="min-h-screen">
           {children}

@@ -1,29 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import PageTransition from '@/components/PageTransition';
-import Icon from '@/components/Icon';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
 import { colors } from '@/lib/colors';
 
 export default function Home() {
-  const [currentBanner, setCurrentBanner] = useState(0);
-  const banners = ['/banner.jpg', '/banner2.jpg', '/banner3.jpg'];
-  const [activeTab, setActiveTab] = useState('about'); // 'about' or 'commitment'
   const [windowWidth, setWindowWidth] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isHoveringCarousel, setIsHoveringCarousel] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBanner((prev) => (prev + 1) % banners.length);
-    }, 5000); // Change banner every 5 seconds
-
-    return () => clearInterval(interval);
-  }, [banners.length]);
-
-  useEffect(() => {
-    // Set initial width
     setWindowWidth(window.innerWidth);
 
     const handleResize = () => {
@@ -37,1903 +25,755 @@ export default function Home() {
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth >= 768 && windowWidth < 1024;
 
+  const projects = [
+    { name: '46 Plaza (Palisades Park)', description: 'Fire alarm system monitoring', image: '/project1.webp' },
+    { name: 'Myung Dong Noodle House (Fort Lee)', description: 'Fire alarm installation and monitoring', image: '/project2.webp' },
+    { name: 'Hey Yogurt (Hoboken & Palisades Park)', description: 'Fire alarm system monitoring', image: '/project3.webp' },
+    { name: 'Superfresh Supermarket (Perth Amboy)', description: 'Fire alarm system monitoring', image: '/project4.webp' },
+    { name: 'Galleria Plaza (Palisades Park)', description: 'Fire alarm system monitoring', image: '/project5.webp' },
+    { name: 'Galleria 10 (Parsippany)', description: 'Fire alarm system installation and monitoring', image: '/project6.webp' },
+    { name: 'SSUM Café & Karaoke (Palisades Park)', description: 'Fire alarm system installation and monitoring', image: '/project7.webp' },
+    { name: 'Dream Pharmacy (Palisades Park)', description: 'HVAC and lighting installation', image: '/project8.webp' },
+    { name: 'BBQ Chicken (Closter)', description: 'New construction, electric and HVAC', image: '/project9.webp' },
+    { name: 'Animal Care of Closter (Closter)', description: 'New construction, electric, HVAC', image: '/project10.webp' },
+    { name: 'MC Creations (Hackensack)', description: 'Two 15-ton commercial air condenser unit installation', image: '/project11.webp' },
+    { name: '10 Court Tennis Facility (Hackensack)', description: 'Lighting, electrical and fire alarm system installation', image: '/project12.webp' }
+  ];
+
+  // Auto-advance carousel with timer reset
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % projects.length);
+    }, 10000); // 10 seconds
+
+    return () => clearInterval(timer);
+  }, [currentSlide, projects.length]); // Reset timer when currentSlide changes
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % projects.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
   return (
     <PageTransition>
-    <div>
-      {/* Hero Banner Section */}
-      <section
-        className="relative w-full overflow-hidden"
-        style={{
-          height: isMobile ? '500px' : '600px'
-        }}
-      >
-        {/* Background Images with transition */}
-        {banners.map((banner, index) => (
+      <div style={{ paddingTop: isMobile ? '2rem' : '2.5rem' }}>
+        {/* Hero Banner Section */}
+        <section
+          className="relative w-full"
+          style={{
+            minHeight: isMobile ? '82vh' : '88vh',
+            position: 'relative',
+            overflow: 'hidden'
+          }}
+        >
+          {/* Background Image */}
           <div
-            key={banner}
-            className="absolute inset-0 w-full h-full transition-opacity duration-1000"
-            style={{ opacity: currentBanner === index ? 1 : 0 }}
-          >
-            <Image
-              src={banner}
-              alt="Professional Wound Care Treatment"
-              fill
-              sizes="100vw"
-              className="object-cover"
-              priority={index === 0}
-              quality={100}
-              unoptimized={true}
-            />
-          </div>
-        ))}
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" style={{ zIndex: 1 }}></div>
-
-        {/* Hero Content */}
-        <div className="relative h-full flex items-center" style={{ zIndex: 2 }}>
-          <div
-            className="w-full"
             style={{
-              padding: isMobile ? '0 1.5rem' : isTablet ? '0 2rem' : '0 4rem'
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: 'url(/banner1.webp)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          />
+
+
+          {/* Content Container */}
+          <div
+            className="relative z-10"
+            style={{
+              minHeight: isMobile ? '82vh' : '88vh',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: isMobile ? '6rem 1.5rem 2rem' : '7rem 3rem 3rem'
+            }}
+          >
+            {/* Hero Content */}
+            <div className="text-center">
+              <h1
+                className="font-bold leading-tight"
+                style={{
+                  fontSize: isMobile ? '3rem' : '5rem',
+                  color: colors.primary.white,
+                  textShadow: '2px 2px 8px rgba(0,0,0,0.3)',
+                  letterSpacing: '-0.02em',
+                  marginBottom: isMobile ? '1rem' : '1.5rem'
+                }}
+              >
+                Fire Protection
+              </h1>
+              {/* Decorative divider line */}
+              <div
+                style={{
+                  width: isMobile ? '80px' : '120px',
+                  height: '3px',
+                  backgroundColor: colors.primary.white,
+                  margin: '0 auto',
+                  marginBottom: isMobile ? '1rem' : '1.5rem',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                }}
+              />
+              <p
+                className="font-semibold"
+                style={{
+                  fontSize: isMobile ? '1.5rem' : '2.25rem',
+                  color: '#D1D5DB',
+                  textShadow: '1px 1px 4px rgba(0,0,0,0.3)',
+                  marginBottom: isMobile ? '2rem' : '2.5rem'
+                }}
+              >
+                Commercial & Residential
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Project Section - Carousel */}
+        <section
+          style={{
+            paddingTop: isMobile ? '3rem' : '5rem',
+            paddingBottom: isMobile ? '3rem' : '5rem',
+            backgroundColor: colors.neutral.offWhite,
+            overflow: 'hidden'
+          }}
+        >
+          <div
+            style={{
+              maxWidth: '1400px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              paddingLeft: isMobile ? '1rem' : '2rem',
+              paddingRight: isMobile ? '1rem' : '2rem'
+            }}
+          >
+            <h2
+              className="font-bold text-center"
+              style={{
+                fontSize: isMobile ? '2rem' : '3rem',
+                color: colors.primary.navy,
+                marginBottom: isMobile ? '3rem' : '4rem'
+              }}
+            >
+              Notable Projects
+            </h2>
+
+            {/* Carousel Container */}
+            <div
+              style={{
+                position: 'relative',
+                height: isMobile ? '500px' : '650px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onMouseEnter={() => setIsHoveringCarousel(true)}
+              onMouseLeave={() => setIsHoveringCarousel(false)}
+            >
+              {/* Slides Container */}
+              <div
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  perspective: '1000px'
+                }}
+              >
+                {projects.map((project, index) => {
+                  // Calculate offset with circular wrapping for smooth looping
+                  let offset = index - currentSlide;
+
+                  // Normalize offset to always take the shortest path around the circle
+                  if (offset > projects.length / 2) {
+                    offset = offset - projects.length;
+                  } else if (offset < -projects.length / 2) {
+                    offset = offset + projects.length;
+                  }
+
+                  const isActive = offset === 0;
+
+                  // Get card width as number
+                  const getCardWidthNum = (cardIndex: number) => {
+                    if (cardIndex === 2) return 48; // Hey Yogurt
+                    if (cardIndex === 4) return 60; // Galleria Plaza
+                    if (cardIndex === 8) return 34; // BBQ Chicken
+                    return 52; // Regular cards
+                  };
+
+                  // Get card width as string
+                  const getCardWidth = () => {
+                    return `${getCardWidthNum(index)}%`;
+                  };
+
+                  // Calculate horizontal position in viewport % to prevent overlap
+                  const getLeftPosition = () => {
+                    const gap = 1; // 1% gap between cards
+                    const activeWidth = getCardWidthNum(currentSlide);
+                    const thisWidth = getCardWidthNum(index);
+
+                    if (offset === 0) return '50%'; // Active - centered
+
+                    if (offset === -1) {
+                      // Previous card - position to the left
+                      const prevCenter = 50 - (activeWidth / 2) - gap - (thisWidth / 2);
+                      return `${prevCenter}%`;
+                    }
+
+                    if (offset === 1) {
+                      // Next card - position to the right
+                      const nextCenter = 50 + (activeWidth / 2) + gap + (thisWidth / 2);
+                      return `${nextCenter}%`;
+                    }
+
+                    if (offset < -1) return '-30%'; // Far left - off screen
+                    return '130%'; // Far right - off screen
+                  };
+
+                  return (
+                    <div
+                      key={index}
+                      className="carousel-slide"
+                      style={{
+                        position: 'absolute',
+                        width: getCardWidth(),
+                        height: (index === 2 || index === 4 || index === 8) ? 'auto' : (isMobile ? '480px' : '600px'),
+                        maxHeight: (index === 2 || index === 4 || index === 8) ? (isMobile ? '480px' : '600px') : undefined,
+                        left: getLeftPosition(),
+                        top: '50%',
+                        transform: `translate(-50%, -50%) scale(${isActive ? 1 : Math.abs(offset) === 1 ? 0.88 : 0.75})`,
+                        transition: 'left 0.8s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1)',
+                        opacity: isActive ? 1 : Math.abs(offset) === 1 ? 0.5 : 0,
+                        pointerEvents: isActive ? 'auto' : 'none',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: (index === 2 || index === 4 || index === 8) ? 'center' : undefined
+                      }}
+                    >
+                      <div
+                        style={{
+                          position: 'relative',
+                          width: '100%',
+                          height: (index === 2 || index === 4 || index === 8) ? 'auto' : '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          backgroundColor: colors.primary.white,
+                          boxShadow: isActive
+                            ? '0 20px 60px rgba(0, 0, 0, 0.3)'
+                            : '0 10px 30px rgba(0, 0, 0, 0.15)',
+                          overflow: 'hidden',
+                          transition: 'box-shadow 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                        }}
+                      >
+                        {/* Image Container */}
+                        <div
+                          style={{
+                            width: '100%',
+                            height: (index === 2 || index === 4 || index === 8) ? 'auto' : '75%',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            display: 'block'
+                          }}
+                        >
+                          {project.image ? (
+                            <img
+                              src={project.image}
+                              alt={project.name}
+                              style={{
+                                width: '100%',
+                                height: (index === 2 || index === 4 || index === 8) ? 'auto' : '100%',
+                                objectFit: (index === 2 || index === 4 || index === 8) ? undefined : 'cover',
+                                display: 'block',
+                                opacity: isActive ? 1 : 0.95,
+                                transition: 'opacity 0.8s ease-in-out'
+                              }}
+                            />
+                          ) : (
+                            <ImagePlaceholder
+                              height="400px"
+                              text={project.name}
+                              subtext={project.description}
+                            />
+                          )}
+                          {project.comingSoon && isActive && (
+                            <div
+                              style={{
+                                position: 'absolute',
+                                top: '1.5rem',
+                                right: '1.5rem',
+                                backgroundColor: 'rgba(255, 193, 7, 0.95)',
+                                color: colors.primary.navy,
+                                padding: '0.5rem 1rem',
+                                borderRadius: '6px',
+                                fontWeight: 'bold',
+                                fontSize: isMobile ? '0.875rem' : '1rem',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+                              }}
+                            >
+                              Coming Soon
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Text Container */}
+                        <div
+                          style={{
+                            width: '100%',
+                            height: (index === 2 || index === 4 || index === 8) ? 'auto' : '25%',
+                            padding: isMobile ? '1rem' : '1.5rem',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            textAlign: 'center'
+                          }}
+                        >
+                          <h3
+                            className="font-bold mb-1"
+                            style={{
+                              fontSize: isMobile ? '1rem' : isActive ? '1.5rem' : '1.25rem',
+                              color: colors.primary.navy,
+                              transition: 'font-size 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-in-out',
+                              opacity: isActive ? 1 : 0.9
+                            }}
+                          >
+                            {project.name}
+                          </h3>
+                          <p
+                            style={{
+                              fontSize: isMobile ? '0.75rem' : isActive ? '1rem' : '0.875rem',
+                              color: colors.secondary.mediumGray,
+                              transition: 'font-size 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-in-out',
+                              lineHeight: '1.4',
+                              opacity: isActive ? 1 : 0.85
+                            }}
+                          >
+                            {project.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Previous Button - Only visible on hover */}
+              <button
+                onClick={prevSlide}
+                style={{
+                  position: 'absolute',
+                  left: isMobile ? '0.5rem' : '2rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  width: isMobile ? '45px' : '60px',
+                  height: isMobile ? '45px' : '60px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s',
+                  zIndex: 20,
+                  opacity: isHoveringCarousel ? 0.8 : 0,
+                  pointerEvents: isHoveringCarousel ? 'auto' : 'none'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = '0.8';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                }}
+              >
+                <svg
+                  width={isMobile ? '30' : '40'}
+                  height={isMobile ? '30' : '40'}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={colors.primary.navy}
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{
+                    filter: 'drop-shadow(0 2px 6px rgba(255, 255, 255, 0.5))'
+                  }}
+                >
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+
+              {/* Next Button - Only visible on hover */}
+              <button
+                onClick={nextSlide}
+                style={{
+                  position: 'absolute',
+                  right: isMobile ? '0.5rem' : '2rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  width: isMobile ? '45px' : '60px',
+                  height: isMobile ? '45px' : '60px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s',
+                  zIndex: 20,
+                  opacity: isHoveringCarousel ? 0.8 : 0,
+                  pointerEvents: isHoveringCarousel ? 'auto' : 'none'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = '0.8';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                }}
+              >
+                <svg
+                  width={isMobile ? '30' : '40'}
+                  height={isMobile ? '30' : '40'}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={colors.primary.navy}
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{
+                    filter: 'drop-shadow(0 2px 6px rgba(255, 255, 255, 0.5))'
+                  }}
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+
+            {/* Project Counter */}
+            <div
+              style={{
+                textAlign: 'center',
+                marginTop: '2rem',
+                color: colors.secondary.mediumGray,
+                fontSize: isMobile ? '0.875rem' : '1rem',
+                fontWeight: '500'
+              }}
+            >
+              {currentSlide + 1} / {projects.length}
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section
+          style={{
+            paddingTop: isMobile ? '3rem' : '5rem',
+            paddingBottom: isMobile ? '3rem' : '5rem',
+            backgroundColor: colors.primary.white
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto'
             }}
           >
             <div
-              className="flex items-start"
               style={{
-                paddingLeft: isMobile ? '0' : '2rem',
-                flexDirection: isMobile ? 'column' : 'row'
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+                gap: isMobile ? '2rem' : '3rem'
               }}
             >
-              {/* White vertical line - hide on mobile */}
-              {!isMobile && (
-                <div style={{
-                  width: '6px',
-                  height: isTablet ? '200px' : '250px',
-                  backgroundColor: '#ffffff',
-                  marginRight: isTablet ? '1.5rem' : '2.5rem',
-                  flexShrink: 0
-                }}></div>
-              )}
-
-              {/* Text content */}
-              <div>
-                <h1
-                  className="font-black leading-tight uppercase"
+              {/* Licensed & Insured */}
+              <div
+                style={{
+                  backgroundColor: colors.neutral.offWhite,
+                  borderRadius: '12px',
+                  padding: isMobile ? '2rem' : '2.5rem',
+                  textAlign: 'center',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
+                }}
+              >
+                <div
                   style={{
-                    fontSize: isMobile ? 'clamp(2rem, 8vw, 2.5rem)' : 'clamp(2.5rem, 5vw, 4.5rem)',
-                    letterSpacing: '0.02em',
-                    color: '#ffffff',
-                    marginBottom: isMobile ? '1rem' : isTablet ? '1.25rem' : '1.5rem'
+                    width: '80px',
+                    height: '80px',
+                    backgroundColor: colors.primary.navy,
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 1.5rem',
+                    fontSize: '2rem',
+                    color: colors.primary.white
                   }}
                 >
-                  Advanced Wound Care &<br />
-                  Limb Preservation
-                </h1>
+                  ✓
+                </div>
+                <h3
+                  className="font-bold mb-3"
+                  style={{
+                    fontSize: isMobile ? '1.25rem' : '1.5rem',
+                    color: colors.primary.navy
+                  }}
+                >
+                  Licensed & Insured
+                </h3>
                 <p
-                  className="font-light leading-relaxed"
                   style={{
-                    fontSize: isMobile ? 'clamp(1rem, 4vw, 1.125rem)' : 'clamp(1.125rem, 2vw, 1.5rem)',
-                    color: '#ffffff',
-                    maxWidth: isMobile ? '100%' : '600px'
+                    fontSize: isMobile ? '0.875rem' : '1rem',
+                    color: colors.secondary.mediumGray,
+                    lineHeight: '1.6'
                   }}
                 >
-                  Providing advanced wound healing and limb preservation to help patients stay safe, healthy, and home.
+                  Fully licensed fire protection contractor with comprehensive insurance coverage
+                </p>
+              </div>
+
+              {/* Experience */}
+              <div
+                style={{
+                  backgroundColor: colors.neutral.offWhite,
+                  borderRadius: '12px',
+                  padding: isMobile ? '2rem' : '2.5rem',
+                  textAlign: 'center',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
+                }}
+              >
+                <div
+                  style={{
+                    width: '80px',
+                    height: '80px',
+                    backgroundColor: colors.primary.navy,
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 1.5rem',
+                    fontSize: '2rem',
+                    color: colors.primary.white
+                  }}
+                >
+                  ★
+                </div>
+                <h3
+                  className="font-bold mb-3"
+                  style={{
+                    fontSize: isMobile ? '1.25rem' : '1.5rem',
+                    color: colors.primary.navy
+                  }}
+                >
+                  Industry Experience
+                </h3>
+                <p
+                  style={{
+                    fontSize: isMobile ? '0.875rem' : '1rem',
+                    color: colors.secondary.mediumGray,
+                    lineHeight: '1.6'
+                  }}
+                >
+                  Years of expertise in commercial and residential fire protection systems
+                </p>
+              </div>
+
+              {/* Quality Service */}
+              <div
+                style={{
+                  backgroundColor: colors.neutral.offWhite,
+                  borderRadius: '12px',
+                  padding: isMobile ? '2rem' : '2.5rem',
+                  textAlign: 'center',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
+                }}
+              >
+                <div
+                  style={{
+                    width: '80px',
+                    height: '80px',
+                    backgroundColor: colors.primary.navy,
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 1.5rem',
+                    fontSize: '2rem',
+                    color: colors.primary.white
+                  }}
+                >
+                  ♥
+                </div>
+                <h3
+                  className="font-bold mb-3"
+                  style={{
+                    fontSize: isMobile ? '1.25rem' : '1.5rem',
+                    color: colors.primary.navy
+                  }}
+                >
+                  Quality Customer Service
+                </h3>
+                <p
+                  style={{
+                    fontSize: isMobile ? '0.875rem' : '1rem',
+                    color: colors.secondary.mediumGray,
+                    lineHeight: '1.6'
+                  }}
+                >
+                  Dedicated to providing excellent service and customer satisfaction
                 </p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* About Section */}
-      <section
-        style={{
-          backgroundColor: '#f9fafb',
-          paddingTop: isMobile ? '3rem' : '5rem',
-          paddingBottom: isMobile ? '3rem' : '5rem'
-        }}
-      >
-        <div
+        {/* Licensing Information */}
+        <section
           style={{
-            paddingLeft: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            paddingRight: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            maxWidth: isMobile || isTablet ? 'none' : '1400px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}
-        >
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : '1.4fr 0.6fr',
-            gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3.5rem',
-            alignItems: 'start'
-          }}>
-            {/* Left Column */}
-            <div>
-              {/* Tab Headers */}
-              <div style={{
-                marginBottom: isMobile ? '1.5rem' : '2rem',
-                display: 'flex',
-                alignItems: 'baseline',
-                gap: isMobile ? '1rem' : '2rem',
-                flexWrap: isMobile ? 'wrap' : 'nowrap'
-              }}>
-                <h2
-                  onClick={() => setActiveTab('about')}
-                  className="font-bold cursor-pointer transition-all duration-300"
-                  style={{
-                    color: activeTab === 'about' ? colors.primary.navy : colors.neutral.lightGray,
-                    borderBottom: activeTab === 'about' ? `4px solid ${colors.primary.blue}` : 'none',
-                    paddingBottom: '0.5rem',
-                    display: 'inline-block',
-                    fontSize: isMobile
-                      ? (activeTab === 'about' ? '1.25rem' : '1.125rem')
-                      : (activeTab === 'about' ? '1.75rem' : '1.375rem'),
-                    transform: 'scale(1)'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (activeTab !== 'about') {
-                      e.currentTarget.style.color = colors.neutral.mediumGray;
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeTab !== 'about') {
-                      e.currentTarget.style.color = colors.neutral.lightGray;
-                      e.currentTarget.style.transform = 'scale(1)';
-                    }
-                  }}
-                >
-                  About Stratum Wound Care
-                </h2>
-                <h2
-                  onClick={() => setActiveTab('commitment')}
-                  className="font-bold cursor-pointer transition-all duration-300"
-                  style={{
-                    color: activeTab === 'commitment' ? colors.primary.navy : colors.neutral.lightGray,
-                    borderBottom: activeTab === 'commitment' ? `4px solid ${colors.primary.blue}` : 'none',
-                    paddingBottom: '0.5rem',
-                    display: 'inline-block',
-                    fontSize: isMobile
-                      ? (activeTab === 'commitment' ? '1.25rem' : '1.125rem')
-                      : (activeTab === 'commitment' ? '1.75rem' : '1.375rem'),
-                    transform: 'scale(1)'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (activeTab !== 'commitment') {
-                      e.currentTarget.style.color = colors.neutral.mediumGray;
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeTab !== 'commitment') {
-                      e.currentTarget.style.color = colors.neutral.lightGray;
-                      e.currentTarget.style.transform = 'scale(1)';
-                    }
-                  }}
-                >
-                  Our Commitment
-                </h2>
-              </div>
-              {/* Content that changes based on tab */}
-              <div style={{
-                position: 'relative',
-                overflow: 'hidden',
-                minHeight: isMobile ? '200px' : '280px'
-              }}>
-                <div
-                  style={{
-                    position: 'absolute',
-                    width: '100%',
-                    transition: 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out',
-                    transform: activeTab === 'about' ? 'translateX(0)' : 'translateX(-100%)',
-                    opacity: activeTab === 'about' ? 1 : 0
-                  }}
-                >
-                  <p style={{
-                    fontSize: isMobile ? '1rem' : '1.125rem',
-                    color: '#374151',
-                    lineHeight: '1.8',
-                    marginBottom: isMobile ? '1rem' : '1.5rem'
-                  }}>
-                    At Stratum Wound Care, we specialize in providing comprehensive wound management services
-                    to patients throughout Pennsylvania. Our team of experienced healthcare professionals is
-                    dedicated to healing complex wounds and preventing amputations.
-                  </p>
-                  <p style={{
-                    fontSize: isMobile ? '1rem' : '1.125rem',
-                    color: '#374151',
-                    lineHeight: '1.8',
-                    marginBottom: isMobile ? '1rem' : '1.5rem'
-                  }}>
-                    With years of experience in home health and community-based wound care, we understand
-                    the unique challenges faced by patients with chronic wounds. Our patient-centered approach
-                    combines cutting-edge treatments with compassionate care.
-                  </p>
-                  <Link
-                    href="/about"
-                    className="inline-block font-semibold transition-all duration-300"
-                    style={{
-                      color: colors.primary.blue,
-                      fontSize: '1.125rem',
-                      borderBottom: `2px solid ${colors.primary.blue}`,
-                      paddingBottom: '4px'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = colors.secondary.darkBlue;
-                      e.currentTarget.style.borderBottomColor = colors.secondary.darkBlue;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = colors.primary.blue;
-                      e.currentTarget.style.borderBottomColor = colors.primary.blue;
-                    }}
-                  >
-                    Learn More About Us →
-                  </Link>
-                </div>
-
-                <div
-                  style={{
-                    position: 'absolute',
-                    width: '100%',
-                    transition: 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out',
-                    transform: activeTab === 'commitment' ? 'translateX(0)' : 'translateX(100%)',
-                    opacity: activeTab === 'commitment' ? 1 : 0
-                  }}
-                >
-                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                    <li className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-800 font-medium text-lg">CMS and PA Department of Health compliant</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-800 font-medium text-lg">HIPAA certified and secure practices</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-800 font-medium text-lg">Medicare and Medicaid certified</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center mr-4">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-800 font-medium text-lg">Evidence-based treatment protocols</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column - Location image stays the same always */}
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=55R+Broadway+Bangor+PA+18013"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                backgroundColor: '#e5e7eb',
-                padding: isMobile ? '0.875rem' : '1.125rem',
-                borderRadius: '1rem',
-                textAlign: 'center',
-                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)',
-                border: '1px solid #d1d5db',
-                display: 'block',
-                textDecoration: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                maxWidth: isMobile || isTablet ? '380px' : 'none',
-                margin: isMobile || isTablet ? '0 auto' : '0'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 6px 15px rgba(0, 0, 0, 0.12)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.08)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-            >
-              <div style={{
-                display: 'inline-block',
-                marginBottom: '0.65rem',
-                borderRadius: '0.5rem',
-                overflow: 'hidden',
-                border: '3px solid #ffffff',
-                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)'
-              }}>
-                <Image
-                  src="/location.png"
-                  alt="Office Location"
-                  width={isMobile ? 190 : isTablet ? 210 : 228}
-                  height={isMobile ? 253 : isTablet ? 280 : 304}
-                  style={{ display: 'block' }}
-                />
-              </div>
-              <div style={{
-                backgroundColor: colors.primary.navy,
-                padding: '0.875rem 1.25rem',
-                borderRadius: '0.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.5rem'
-              }}>
-                <div>
-                  <p style={{
-                    fontSize: '1.125rem',
-                    fontWeight: '600',
-                    color: '#ffffff',
-                    marginBottom: '0.25rem',
-                    letterSpacing: '0.5px'
-                  }}>55R Broadway</p>
-                  <p style={{
-                    fontSize: '1.125rem',
-                    fontWeight: '600',
-                    color: '#ffffff',
-                    letterSpacing: '0.5px'
-                  }}>Bangor, PA 18013</p>
-                </div>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#ffffff"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ flexShrink: 0, marginLeft: '0.25rem' }}
-                >
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Image Section - Facility / Team */}
-      <section
-        style={{
-          paddingTop: isMobile ? '3rem' : '4rem',
-          paddingBottom: isMobile ? '3rem' : '4rem',
-          backgroundColor: '#f9fafb'
-        }}
-      >
-        <div
-          style={{
-            paddingLeft: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            paddingRight: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            maxWidth: '1400px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}
-        >
-          <ImagePlaceholder
-            height={isMobile ? '300px' : isTablet ? '400px' : '500px'}
-            text="Our Modern Wound Care Facility"
-            subtext="Professional healthcare environment with state-of-the-art equipment"
-          />
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section
-        style={{
-          paddingTop: isMobile ? '3rem' : '5rem',
-          paddingBottom: isMobile ? '3rem' : '5rem',
-          backgroundColor: '#ffffff'
-        }}
-      >
-        <div
-          style={{
-            paddingLeft: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            paddingRight: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            maxWidth: '1400px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
+            paddingTop: isMobile ? '3rem' : '4rem',
+            paddingBottom: isMobile ? '3rem' : '4rem',
+            backgroundColor: colors.primary.navy,
+            color: colors.primary.white
           }}
         >
           <div
             style={{
-              background: colors.gradients.darkBlue,
-              borderRadius: isMobile ? '16px' : '24px',
-              padding: isMobile ? '2rem' : isTablet ? '3rem' : '4rem',
-              boxShadow: `0 8px 30px rgba(8, 145, 220, 0.2)`,
-              border: `1px solid ${colors.primary.blue}20`
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              textAlign: 'center'
             }}
           >
-            {/* Main Heading */}
             <h2
-              className="font-bold"
+              className="font-bold mb-6"
               style={{
-                color: '#ffffff',
-                marginBottom: '0.75rem',
-                fontSize: isMobile ? '1.875rem' : isTablet ? '2.5rem' : '3rem'
+                fontSize: isMobile ? '1.75rem' : '2.5rem'
               }}
             >
-              Our Specialized Services
+              Licensed & Certified
             </h2>
-            <p
-              style={{
-                color: '#e5e5e5',
-                marginBottom: isMobile ? '2.5rem' : '3rem',
-                fontSize: isMobile ? '1rem' : '1.25rem',
-                maxWidth: '48rem'
-              }}
-            >
-              Comprehensive wound care solutions tailored to your specific needs
-            </p>
-
-            {/* Wound Types Section */}
-            <div style={{ marginBottom: isMobile ? '3rem' : '4rem' }}>
-              <h3
-                className="font-bold"
-                style={{
-                  color: '#d1d5db',
-                  marginBottom: '1.5rem',
-                  fontSize: isMobile ? '1.5rem' : '2rem',
-                  letterSpacing: '0.5px'
-                }}
-              >
-                Types of Wounds We Treat
-              </h3>
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: isMobile
-                    ? '1fr'
-                    : isTablet
-                    ? 'repeat(2, 1fr)'
-                    : 'repeat(3, 1fr)',
-                  gap: isMobile ? '1rem' : '1.5rem'
-                }}
-              >
-                {[
-                  { title: "Diabetic Foot Ulcers", description: "Specialized care for diabetic foot ulcers and complications", icon: "shield", color: '#374151', hasImage: true, imagePlaceholder: "Diabetic Foot Care" },
-                  { title: "Pressure Injuries", description: "Treatment and prevention of bedsores and pressure wounds", icon: "hospital", color: '#374151', hasImage: true, imagePlaceholder: "Pressure Wound Treatment" },
-                  { title: "Wound Infections", description: "Expert treatment of infected wounds and complications", icon: "alert", color: '#374151', hasImage: true, imagePlaceholder: "Infection Control" },
-                  { title: "Chronic Soft Tissue Infections", description: "Long-term management of soft tissue infections", icon: "clipboard", color: '#374151', hasImage: true, imagePlaceholder: "Soft Tissue Care" },
-                  { title: "Chronic Bone Infections", description: "Specialized care for osteomyelitis and bone infections", icon: "shield", color: '#374151', hasImage: true, imagePlaceholder: "Bone Infection Treatment" },
-                  { title: "Venous Leg Ulcers", description: "Advanced treatment for venous insufficiency wounds", icon: "heart", color: '#374151', hasImage: true, imagePlaceholder: "Venous Ulcer Care" },
-                  { title: "Arterial Ulcers", description: "Care for wounds caused by arterial insufficiency", icon: "heart", color: '#374151', hasImage: true, imagePlaceholder: "Arterial Wound Care" },
-                  { title: "Surgical Wounds", description: "Post-operative wound management and healing", icon: "clipboard", color: '#374151', hasImage: true, imagePlaceholder: "Surgical Wound Care" },
-                  { title: "Atypical Wounds", description: "Diagnosis and treatment of unusual wound types", icon: "checkCircle", color: '#374151', hasImage: true, imagePlaceholder: "Specialized Treatment" }
-                ].map((service, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      backgroundColor: colors.primary.navy,
-                      padding: service.hasImage ? 0 : (isMobile ? '1.25rem' : '1.75rem'),
-                      borderRadius: '12px',
-                      transition: 'all 0.3s',
-                      borderLeft: service.hasImage ? 'none' : `4px solid ${colors.primary.green}`,
-                      position: 'relative',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: '100%',
-                      overflow: 'hidden',
-                      border: `1px solid ${colors.primary.blue}40`
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = colors.secondary.darkBlue;
-                      e.currentTarget.style.transform = 'translateY(-4px)';
-                      e.currentTarget.style.boxShadow = `0 8px 20px rgba(8, 145, 220, 0.3)`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = colors.primary.navy;
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }}
-                  >
-                    {service.hasImage ? (
-                      <>
-                        <div style={{ width: '100%', height: '160px', backgroundColor: colors.neutral.darkGray, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke={colors.primary.blue} strokeWidth="2">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                          </svg>
-                        </div>
-                        <div style={{ padding: isMobile ? '1.25rem' : '1.5rem' }}>
-                          <h3
-                            className="font-bold"
-                            style={{
-                              color: '#ffffff',
-                              marginBottom: '0.75rem',
-                              fontSize: isMobile ? '1.125rem' : '1.25rem'
-                            }}
-                          >
-                            {service.title}
-                          </h3>
-                          <p
-                            style={{
-                              color: '#d1d1d1',
-                              fontSize: isMobile ? '0.875rem' : '1rem',
-                              lineHeight: '1.6'
-                            }}
-                          >
-                            {service.description}
-                          </p>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div style={{ marginBottom: '1rem' }}>
-                          <Icon type={service.icon} size={isMobile ? 40 : 48} color={colors.primary.green} />
-                        </div>
-                        <h3
-                          className="font-bold"
-                          style={{
-                            color: '#ffffff',
-                            marginBottom: '0.75rem',
-                            fontSize: isMobile ? '1.125rem' : '1.25rem'
-                          }}
-                        >
-                          {service.title}
-                        </h3>
-                        <p
-                          style={{
-                            color: '#d1d1d1',
-                            fontSize: isMobile ? '0.875rem' : '1rem',
-                            lineHeight: '1.6'
-                          }}
-                        >
-                          {service.description}
-                        </p>
-                      </>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Treatment Methods Section */}
-            <div>
-              <h3
-                className="font-bold"
-                style={{
-                  color: '#d1d5db',
-                  marginBottom: '1.5rem',
-                  fontSize: isMobile ? '1.5rem' : '2rem',
-                  letterSpacing: '0.5px'
-                }}
-              >
-                Advanced Treatment Methods
-              </h3>
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: isMobile
-                    ? '1fr'
-                    : isTablet
-                    ? 'repeat(2, 1fr)'
-                    : 'repeat(4, 1fr)',
-                  gap: isMobile ? '1rem' : '1.5rem'
-                }}
-              >
-                {[
-                  { title: "Negative Pressure TX", description: "Wound VAC therapy for advanced healing", icon: "award", color: '#6b7280' },
-                  { title: "Surgical Debridement", description: "Removal of damaged tissue to promote healing", icon: "clipboard", color: '#6b7280' },
-                  { title: "Water Debridement", description: "Hydrotherapy-based wound cleaning", icon: "shield", color: '#6b7280' },
-                  { title: "Ultrasonic Debridement", description: "Advanced ultrasonic wound care technology", icon: "checkCircle", color: '#6b7280' }
-                ].map((service, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      backgroundColor: '#1a1a1a',
-                      padding: isMobile ? '1.25rem' : '1.75rem',
-                      borderRadius: '12px',
-                      transition: 'all 0.3s',
-                      borderLeft: `4px solid ${service.color}`,
-                      position: 'relative',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: '100%'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#2d2d2d';
-                      e.currentTarget.style.transform = 'translateY(-4px)';
-                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(255, 255, 255, 0.15)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = '#1a1a1a';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }}
-                  >
-                    <div style={{ marginBottom: '1rem' }}>
-                      <Icon type={service.icon} size={isMobile ? 40 : 48} color="#9ca3af" />
-                    </div>
-                    <h3
-                      className="font-bold"
-                      style={{
-                        color: '#ffffff',
-                        marginBottom: '0.75rem',
-                        fontSize: isMobile ? '1.125rem' : '1.25rem'
-                      }}
-                    >
-                      {service.title}
-                    </h3>
-                    <p
-                      style={{
-                        color: '#d1d1d1',
-                        fontSize: isMobile ? '0.875rem' : '1rem',
-                        lineHeight: '1.6'
-                      }}
-                    >
-                      {service.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* View All Services Button */}
-            <div className="text-center" style={{ marginTop: isMobile ? '2.5rem' : '3.5rem' }}>
-              <Link
-                href="/services"
-                style={{
-                  display: 'inline-block',
-                  backgroundColor: '#ffffff',
-                  color: '#000000',
-                  padding: isMobile ? '0.875rem 1.75rem' : '1rem 2.5rem',
-                  borderRadius: '12px',
-                  fontWeight: 'bold',
-                  fontSize: isMobile ? '1rem' : '1.125rem',
-                  transition: 'all 0.3s',
-                  boxShadow: '0 4px 12px rgba(255, 255, 255, 0.2)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#f0f0f0';
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#ffffff';
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
-              >
-                View All Services
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Patient Information Section */}
-      <section
-        style={{
-          paddingTop: isMobile ? '3rem' : '5rem',
-          paddingBottom: isMobile ? '3rem' : '5rem',
-          backgroundColor: '#f9fafb'
-        }}
-      >
-        <div
-          style={{
-            paddingLeft: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            paddingRight: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            maxWidth: '1400px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}
-        >
-          <h2
-            style={{
-              fontSize: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
-              fontWeight: 'bold',
-              color: '#111827',
-              marginBottom: '1rem',
-              textAlign: 'center'
-            }}
-          >
-            Patient Information
-          </h2>
-          <p
-            style={{
-              fontSize: isMobile ? '1rem' : '1.25rem',
-              color: '#6b7280',
-              textAlign: 'center',
-              marginBottom: isMobile ? '2.5rem' : '3.5rem',
-              maxWidth: '700px',
-              marginLeft: 'auto',
-              marginRight: 'auto'
-            }}
-          >
-            Everything you need to know about getting started with Stratum Wound Care
-          </p>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-              gap: isMobile ? '1.5rem' : '2rem',
-              marginBottom: isMobile ? '2rem' : '3rem'
-            }}
-          >
-            {/* Accepted Insurances */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="creditCard" size={40} color="#6b7280" />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}
-              >
-                Accepted Insurances
-              </h3>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {['Medicare', 'Medicaid', 'Major private insurers'].map((item, index) => (
-                  <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                    <span style={{ color: '#10b981', fontSize: '1.25rem', marginRight: '0.5rem' }}>✓</span>
-                    <span style={{ color: '#374151', fontSize: isMobile ? '0.875rem' : '1rem' }}>
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Referrals */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="clipboard" size={40} color="#6b7280" />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}
-              >
-                Referrals
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1rem'
-                }}
-              >
-                Step-by-step guide for physicians and home health agencies
-              </p>
-              <Link
-                href="/providers"
-                style={{
-                  color: '#111827',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'underline'
-                }}
-              >
-                Learn more →
-              </Link>
-            </div>
-
-            {/* Patient Forms */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="fileText" size={40} color="#6b7280" />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}
-              >
-                Patient Forms
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1rem'
-                }}
-              >
-                Downloadable new patient forms (HIPAA compliant PDFs)
-              </p>
-              <Link
-                href="/patients"
-                style={{
-                  color: '#111827',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'underline'
-                }}
-              >
-                Download forms →
-              </Link>
-            </div>
-
-            {/* Portal Access */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="lock" size={40} color="#6b7280" />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}
-              >
-                Portal Access
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1rem'
-                }}
-              >
-                Access test results and visit summaries online
-              </p>
-              <a
-                href="#"
-                style={{
-                  color: '#111827',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'underline'
-                }}
-              >
-                Patient portal →
-              </a>
-            </div>
-
-            {/* FAQ */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="helpCircle" size={40} color="#6b7280" />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}
-              >
-                FAQ
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1rem'
-                }}
-              >
-                Wound healing times, follow-up process, and billing guidance
-              </p>
-              <Link
-                href="/patients#faq"
-                style={{
-                  color: '#111827',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'underline'
-                }}
-              >
-                View FAQs →
-              </Link>
-            </div>
-
-            {/* Contact Information */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="phone" size={40} color="#6b7280" />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}
-              >
-                Have Questions?
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1rem'
-                }}
-              >
-                Our team is here to help you every step of the way
-              </p>
-              <Link
-                href="/contact"
-                style={{
-                  color: '#111827',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'underline'
-                }}
-              >
-                Contact us →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Provider Referrals Section */}
-      <section
-        style={{
-          paddingTop: isMobile ? '3rem' : '5rem',
-          paddingBottom: isMobile ? '3rem' : '5rem',
-          backgroundColor: '#ffffff'
-        }}
-      >
-        <div
-          style={{
-            paddingLeft: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            paddingRight: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            maxWidth: '1400px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}
-        >
-          <h2
-            style={{
-              fontSize: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
-              fontWeight: 'bold',
-              color: '#111827',
-              marginBottom: '1rem',
-              textAlign: 'center'
-            }}
-          >
-            Provider Referrals
-          </h2>
-          <p
-            style={{
-              fontSize: isMobile ? '1rem' : '1.25rem',
-              color: '#6b7280',
-              textAlign: 'center',
-              marginBottom: isMobile ? '2.5rem' : '3.5rem',
-              maxWidth: '700px',
-              marginLeft: 'auto',
-              marginRight: 'auto'
-            }}
-          >
-            Streamlined referral process for healthcare providers
-          </p>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-              gap: isMobile ? '1.5rem' : '2rem'
-            }}
-          >
-            {/* Referral Portal */}
-            <div
-              style={{
-                backgroundColor: '#f9fafb',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="lock" size={40} color="#6b7280" />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}
-              >
-                Referral Portal
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1rem'
-                }}
-              >
-                Secure HIPAA-compliant form submission for physicians
-              </p>
-              <Link
-                href="/providers"
-                style={{
-                  color: '#111827',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'underline'
-                }}
-              >
-                Access portal →
-              </Link>
-            </div>
-
-            {/* CMS Referral Data */}
-            <div
-              style={{
-                backgroundColor: '#f9fafb',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="barChart" size={40} color="#6b7280" />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}
-              >
-                Referral Data
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1rem'
-                }}
-              >
-                CMS referral density visualization by Orange County and PA towns
-              </p>
-              <a
-                href="#"
-                style={{
-                  color: '#111827',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'underline'
-                }}
-              >
-                View data →
-              </a>
-            </div>
-
-            {/* Specialist Collaboration */}
-            <div
-              style={{
-                backgroundColor: '#f9fafb',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="handshake" size={40} color="#6b7280" />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}
-              >
-                Specialist Collaboration
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1rem'
-                }}
-              >
-                Endocrinology and podiatry partnership programs
-              </p>
-              <Link
-                href="/providers#collaboration"
-                style={{
-                  color: '#111827',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'underline'
-                }}
-              >
-                Learn more →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Us Section - Consolidated */}
-      <section
-        style={{
-          paddingTop: isMobile ? '4rem' : '6rem',
-          paddingBottom: isMobile ? '4rem' : '6rem',
-          background: colors.gradients.darkBlue
-        }}
-      >
-        <div
-          style={{
-            paddingLeft: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            paddingRight: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            maxWidth: '1400px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}
-        >
-          <h2
-            style={{
-              fontSize: isMobile ? '2.5rem' : isTablet ? '3rem' : '3.5rem',
-              fontWeight: 'bold',
-              color: '#ffffff',
-              marginBottom: isMobile ? '3rem' : '4rem',
-              textAlign: 'center',
-              letterSpacing: '0.5px'
-            }}
-          >
-            CONTACT US
-          </h2>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile || isTablet ? '1fr' : '1fr 1fr',
-              gap: isMobile ? '3rem' : '4rem',
-              alignItems: 'start'
-            }}
-          >
-            {/* Left: Contact Form */}
-            <div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.5rem' : '1.75rem',
-                  fontWeight: '600',
-                  color: '#ffffff',
-                  marginBottom: '2rem'
-                }}
-              >
-                Send a Message
-              </h3>
-
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <input
-                  type="text"
-                  placeholder="Name*"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '1rem 1.25rem',
-                    backgroundColor: 'transparent',
-                    border: '1px solid #ffffff',
-                    borderRadius: '4px',
-                    color: '#ffffff',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s'
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.border = `1px solid ${colors.primary.blue}`;
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.border = '1px solid #ffffff';
-                  }}
-                />
-
-                <input
-                  type="email"
-                  placeholder="Email*"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '1rem 1.25rem',
-                    backgroundColor: 'transparent',
-                    border: '1px solid #ffffff',
-                    borderRadius: '4px',
-                    color: '#ffffff',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s'
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.border = `1px solid ${colors.primary.blue}`;
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.border = '1px solid #ffffff';
-                  }}
-                />
-
-                <textarea
-                  placeholder="Message"
-                  rows={6}
-                  style={{
-                    width: '100%',
-                    padding: '1rem 1.25rem',
-                    backgroundColor: 'transparent',
-                    border: '1px solid #ffffff',
-                    borderRadius: '4px',
-                    color: '#ffffff',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'border-color 0.3s',
-                    resize: 'vertical',
-                    fontFamily: 'inherit'
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.border = `1px solid ${colors.primary.blue}`;
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.border = '1px solid #ffffff';
-                  }}
-                />
-
-                <button
-                  type="submit"
-                  style={{
-                    background: colors.gradients.blueGreen,
-                    color: '#ffffff',
-                    padding: isMobile ? '0.875rem 2rem' : '1rem 2.5rem',
-                    borderRadius: '4px',
-                    fontWeight: 'bold',
-                    fontSize: '1rem',
-                    border: `2px solid ${colors.primary.blue}`,
-                    cursor: 'pointer',
-                    transition: 'all 0.3s',
-                    alignSelf: 'center',
-                    width: isMobile ? '100%' : 'auto'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = colors.secondary.lightBlue;
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = colors.gradients.blueGreen;
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
-                >
-                  Send
-                </button>
-              </form>
-            </div>
-
-            {/* Right: Contact Information */}
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '2.5rem'
+                gap: '1rem',
+                fontSize: isMobile ? '1rem' : '1.125rem',
+                maxWidth: '800px',
+                margin: '0 auto'
               }}
             >
-              {/* Phone */}
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}>
-                  <Icon type="phone" size={24} color={colors.primary.green} />
-                  <h4 style={{
-                    fontSize: '1.125rem',
-                    fontWeight: '600',
-                    color: '#ffffff',
-                    margin: 0
-                  }}>
-                    Phone
-                  </h4>
-                </div>
-                <p style={{
-                  fontSize: '1rem',
-                  color: '#d1d5db',
-                  marginLeft: '2.5rem',
-                  lineHeight: '1.6'
-                }}>
-                  Main: (555) 123-4567<br />
-                  Provider Line: (555) 123-4568<br />
-                  Emergency: (555) 123-9999
-                </p>
-              </div>
-
-              {/* Email */}
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}>
-                  <Icon type="mail" size={24} color={colors.primary.green} />
-                  <h4 style={{
-                    fontSize: '1.125rem',
-                    fontWeight: '600',
-                    color: '#ffffff',
-                    margin: 0
-                  }}>
-                    Email
-                  </h4>
-                </div>
-                <p style={{
-                  fontSize: '1rem',
-                  color: '#d1d5db',
-                  marginLeft: '2.5rem',
-                  lineHeight: '1.6'
-                }}>
-                  info@stratumwoundcare.com
-                </p>
-              </div>
-
-              {/* Location */}
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}>
-                  <Icon type="mapPin" size={24} color={colors.primary.green} />
-                  <h4 style={{
-                    fontSize: '1.125rem',
-                    fontWeight: '600',
-                    color: '#ffffff',
-                    margin: 0
-                  }}>
-                    Location
-                  </h4>
-                </div>
-                <p style={{
-                  fontSize: '1rem',
-                  color: '#d1d5db',
-                  marginLeft: '2.5rem',
-                  lineHeight: '1.6'
-                }}>
-                  55R Broadway<br />
-                  Bangor, PA 18013
-                </p>
-                <Link
-                  href="https://www.google.com/maps/search/?api=1&query=55R+Broadway+Bangor+PA+18013"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-block',
-                    marginLeft: '2.5rem',
-                    marginTop: '0.5rem',
-                    color: colors.primary.green,
-                    fontSize: '0.875rem',
-                    textDecoration: 'underline',
-                    transition: 'color 0.3s'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = colors.secondary.lightGreen}
-                  onMouseLeave={(e) => e.currentTarget.style.color = colors.primary.green}
-                >
-                  Get Directions →
-                </Link>
-              </div>
-
-              {/* Office Hours */}
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}>
-                  <Icon type="clock" size={24} color={colors.primary.green} />
-                  <h4 style={{
-                    fontSize: '1.125rem',
-                    fontWeight: '600',
-                    color: '#ffffff',
-                    margin: 0
-                  }}>
-                    Office Hours
-                  </h4>
-                </div>
-                <p style={{
-                  fontSize: '1rem',
-                  color: '#d1d5db',
-                  marginLeft: '2.5rem',
-                  lineHeight: '1.6'
-                }}>
-                  Monday - Friday: 8:00 AM - 5:00 PM<br />
-                  Saturday: 9:00 AM - 1:00 PM<br />
-                  Sunday: Closed
-                </p>
-              </div>
+              <p>State of New Jersey Fire Protection Contractor Permit No. P01654</p>
+              <p>NJ HIC License No. 13VH12649700</p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Careers Section */}
-      <section
-        style={{
-          paddingTop: isMobile ? '3rem' : '5rem',
-          paddingBottom: isMobile ? '3rem' : '5rem',
-          backgroundColor: '#f9fafb'
-        }}
-      >
-        <div
+        {/* Contact CTA Section */}
+        <section
           style={{
-            paddingLeft: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            paddingRight: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            maxWidth: '1400px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
+            paddingTop: isMobile ? '4rem' : '6rem',
+            paddingBottom: isMobile ? '4rem' : '6rem',
+            backgroundColor: colors.neutral.offWhite
           }}
         >
-          {/* Left-aligned header */}
-          <div style={{ marginBottom: isMobile ? '2.5rem' : '3.5rem' }}>
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '800px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              textAlign: 'center'
+            }}
+          >
             <h2
+              className="font-bold mb-4"
               style={{
-                fontSize: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
-                fontWeight: 'bold',
-                color: '#111827',
-                marginBottom: '1rem',
-                textAlign: 'left'
+                fontSize: isMobile ? '2rem' : '3rem',
+                color: colors.primary.navy
               }}
             >
-              Start Your Career in Wound Management
+              Need Fire Protection Services?
             </h2>
             <p
+              className="mb-8"
               style={{
-                fontSize: isMobile ? '1.125rem' : '1.5rem',
-                color: '#111827',
-                fontWeight: '600',
-                textAlign: 'left',
-                marginBottom: '0.5rem'
+                fontSize: isMobile ? '1.125rem' : '1.25rem',
+                color: colors.secondary.mediumGray,
+                lineHeight: '1.6'
               }}
             >
-              Empowerment • Partnership • Results
-            </p>
-            <p
-              style={{
-                fontSize: isMobile ? '1rem' : '1.125rem',
-                color: '#6b7280',
-                textAlign: 'left',
-                maxWidth: '800px'
-              }}
-            >
-              Physicians and Advanced Practitioners have built successful practices with Stratum
-            </p>
-          </div>
-
-          {/* Key Benefits Grid */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-              gap: isMobile ? '1.5rem' : '2rem',
-              marginBottom: isMobile ? '2rem' : '3rem'
-            }}
-          >
-            {/* Flexibility */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="calendar" size={40} color={colors.primary.blue} />
-              </div>
-              <h3
+              Contact us today at{' '}
+              <a
+                href="tel:2019195006"
                 style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
+                  color: colors.primary.navy,
                   fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '0.75rem'
+                  textDecoration: 'none',
+                  borderBottom: `2px solid ${colors.primary.navy}`
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = colors.secondary.darkNavy;
+                  e.currentTarget.style.borderColor = colors.secondary.darkNavy;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = colors.primary.navy;
+                  e.currentTarget.style.borderColor = colors.primary.navy;
                 }}
               >
-                Choose Your Own Schedule
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6'
-                }}
-              >
-                Complete flexibility and autonomy. We provide the structure; you set the schedule.
-              </p>
-            </div>
-
-            {/* Patient Impact */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="heart" size={40} color={colors.primary.green} />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '0.75rem'
-                }}
-              >
-                Improve Patient Outcomes
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6'
-                }}
-              >
-                Partner with post-acute care facilities to heal patients and improve quality of life for seniors.
-              </p>
-            </div>
-
-            {/* Advanced Training */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="graduationCap" size={40} color={colors.primary.blue} />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '0.75rem'
-                }}
-              >
-                Become an Expert Clinician
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6'
-                }}
-              >
-                Comprehensive wound care training and professional development opportunities.
-              </p>
-            </div>
-
-            {/* Specialized Practice */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="hospital" size={40} color={colors.primary.green} />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '0.75rem'
-                }}
-              >
-                Focus on Post-Acute Care
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6'
-                }}
-              >
-                Treat complex chronic wounds at skilled nursing and long-term acute care facilities.
-              </p>
-            </div>
-
-            {/* Competitive Salary */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="dollarSign" size={40} color={colors.primary.green} />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '0.75rem'
-                }}
-              >
-                Earn Competitive Salary
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6'
-                }}
-              >
-                W2 or independent contractor positions. No call, nights, or weekends.
-              </p>
-            </div>
-
-            {/* Reduced Admin */}
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '1.5rem' : '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-              }}
-            >
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="clipboard" size={40} color={colors.primary.blue} />
-              </div>
-              <h3
-                style={{
-                  fontSize: isMobile ? '1.25rem' : '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '0.75rem'
-                }}
-              >
-                Reduced Administrative Burden
-              </h3>
-              <p
-                style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6'
-                }}
-              >
-                Proprietary EMR and dedicated support staff handle logistics so you focus on care.
-              </p>
-            </div>
-          </div>
-
-          {/* Application CTA */}
-          <div
-            style={{
-              backgroundColor: '#111827',
-              borderRadius: '12px',
-              padding: isMobile ? '2rem' : '3rem',
-              textAlign: 'center'
-            }}
-          >
-            <h3
-              style={{
-                fontSize: isMobile ? '1.5rem' : '2rem',
-                fontWeight: 'bold',
-                color: '#ffffff',
-                marginBottom: '1rem'
-              }}
-            >
-              Join Physicians & Advanced Practitioners Who've Built Successful Practices
-            </h3>
-            <p
-              style={{
-                fontSize: isMobile ? '1rem' : '1.125rem',
-                color: '#d1d5db',
-                marginBottom: '2rem',
-                maxWidth: '700px',
-                marginLeft: 'auto',
-                marginRight: 'auto'
-              }}
-            >
-              Explore opportunities for physicians, nurse practitioners, nurses, and support staff
+                (201) 919-5006
+              </a>{' '}
+              for professional fire protection installation and monitoring services
             </p>
             <Link
-              href="/careers"
+              href="/contact"
               style={{
-                background: colors.gradients.blueGreen,
-                color: '#ffffff',
-                padding: isMobile ? '0.875rem 2rem' : '1rem 2.5rem',
-                borderRadius: '8px',
-                fontWeight: 'bold',
-                fontSize: isMobile ? '1rem' : '1.125rem',
-                textDecoration: 'none',
                 display: 'inline-block',
+                backgroundColor: colors.primary.navy,
+                color: colors.primary.white,
+                padding: isMobile ? '1rem 2rem' : '1.25rem 3rem',
+                borderRadius: '8px',
+                fontSize: isMobile ? '1rem' : '1.125rem',
+                fontWeight: 'bold',
+                textDecoration: 'none',
                 transition: 'all 0.3s',
-                border: `2px solid ${colors.primary.blue}`,
-                boxShadow: `0 4px 12px rgba(8, 145, 220, 0.3)`
+                boxShadow: '0 4px 12px rgba(39, 52, 70, 0.3)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = colors.secondary.darkNavy;
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = colors.primary.navy;
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              View Career Opportunities
+              Contact Us
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section
-        style={{
-          paddingTop: isMobile ? '3rem' : '5rem',
-          paddingBottom: isMobile ? '3rem' : '5rem',
-          backgroundColor: '#ffffff'
-        }}
-      >
-        <div
-          style={{
-            paddingLeft: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            paddingRight: isMobile ? '1.5rem' : isTablet ? '3rem' : '4rem',
-            maxWidth: '1400px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}
-        >
-          <h2
-            style={{
-              fontSize: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
-              fontWeight: 'bold',
-              color: '#111827',
-              marginBottom: '1rem',
-              textAlign: 'center'
-            }}
-          >
-            What Our Patients Say
-          </h2>
-          <p
-            style={{
-              fontSize: isMobile ? '1rem' : '1.125rem',
-              color: '#6b7280',
-              textAlign: 'center',
-              marginBottom: isMobile ? '2.5rem' : '3.5rem',
-              maxWidth: '700px',
-              marginLeft: 'auto',
-              marginRight: 'auto'
-            }}
-          >
-            HIPAA-compliant success stories
-          </p>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-              gap: isMobile ? '1.5rem' : '2rem'
-            }}
-          >
-            {[
-              {
-                quote: "The care I received was exceptional. The staff was knowledgeable and compassionate throughout my treatment.",
-                author: "Patient - Diabetic Wound Care"
-              },
-              {
-                quote: "Thanks to their advanced treatments, I was able to avoid amputation and return to my normal activities.",
-                author: "Patient - Limb Preservation"
-              },
-              {
-                quote: "The team made me feel comfortable and explained everything clearly. My wound healed faster than expected.",
-                author: "Patient - Pressure Ulcer Treatment"
-              }
-            ].map((testimonial, index) => (
-              <div
-                key={index}
-                style={{
-                  backgroundColor: '#f9fafb',
-                  borderRadius: '12px',
-                  padding: isMobile ? '1.5rem' : '2rem',
-                  border: '1px solid #e5e7eb',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: '3rem',
-                    color: '#111827',
-                    marginBottom: '1rem',
-                    lineHeight: '1'
-                  }}
-                >
-                  "
-                </div>
-                <p
-                  style={{
-                    fontSize: isMobile ? '0.875rem' : '1rem',
-                    color: '#374151',
-                    lineHeight: '1.6',
-                    fontStyle: 'italic',
-                    marginBottom: '1.5rem',
-                    flex: '1'
-                  }}
-                >
-                  {testimonial.quote}
-                </p>
-                <p
-                  style={{
-                    fontSize: isMobile ? '0.875rem' : '1rem',
-                    color: '#111827',
-                    fontWeight: '600'
-                  }}
-                >
-                  — {testimonial.author}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-    </div>
+        </section>
+      </div>
     </PageTransition>
   );
 }

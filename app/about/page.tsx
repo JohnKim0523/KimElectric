@@ -1,9 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import PageTransition from '@/components/PageTransition';
-import ImagePlaceholder from '@/components/ImagePlaceholder';
 import { colors } from '@/lib/colors';
 
 export default function AboutPage() {
@@ -11,7 +9,11 @@ export default function AboutPage() {
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
-    const handleResize = () => setWindowWidth(window.innerWidth);
+
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -19,593 +21,505 @@ export default function AboutPage() {
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth >= 768 && windowWidth < 1024;
 
+  const serviceAreas = [
+    ['Palisades Park', 'Fort Lee'],
+    ['Hackensack', 'Englewood Cliffs'],
+    ['Ridgefield', 'Closter'],
+    ['Cliffside Park', 'Ridgewood'],
+    ['Englewood', 'Hoboken'],
+    ['Woodbridge', 'Parsippany'],
+    ['Stirling', 'Morris Plains'],
+    ['Matawan', 'Little Ferry'],
+    ['Belleville', 'Millburn']
+  ];
+
+  const teamMembers = [
+    {
+      name: 'Brandon',
+      title: 'Owner',
+      phone: '(201)-919-5006',
+      description: 'Experienced in fire alarm systems and monitoring, electric, and construction.'
+    },
+    {
+      name: 'Ki',
+      title: 'Construction Manager',
+      phone: '(201)-403-8089',
+      description: 'Ki has over 30 years of experience in the construction and HVAC industry. He was also the owner of Han Rhim LLC (previously known as Han Nam Hi-Tech).'
+    },
+    {
+      name: 'Chong',
+      title: 'Electric and Fire Alarm Manager',
+      phone: '',
+      description: 'Previous owner of KOAM Fire Alarms located in Palisades Park.'
+    }
+  ];
+
   return (
     <PageTransition>
-    <div style={{ paddingTop: '130px' }}>
-      {/* Hero Header Section */}
-      <section style={{
-        backgroundColor: colors.primary.navy,
-        paddingTop: isMobile ? '3rem' : '4rem',
-        paddingBottom: isMobile ? '3rem' : '4rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem'
-        }}>
-          <h1 style={{
-            fontSize: isMobile ? '2.5rem' : isTablet ? '3rem' : '3.5rem',
-            fontWeight: 'bold',
-            color: '#ffffff',
-            marginBottom: '1rem'
-          }}>
-            About Stratum Wound Care
-          </h1>
-          <p style={{
-            fontSize: isMobile ? '1.125rem' : isTablet ? '1.25rem' : '1.5rem',
-            color: '#d1d5db',
-            maxWidth: '800px'
-          }}>
-            Transforming wound care through clinical excellence, compassionate service, and unwavering commitment to patient outcomes
-          </p>
-        </div>
-      </section>
-
-      {/* Overview & Mission Section */}
-      <section style={{
-        backgroundColor: '#f9fafb',
-        paddingTop: isMobile ? '3rem' : '4rem',
-        paddingBottom: isMobile ? '3rem' : '4rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem'
-        }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile || isTablet ? '1fr' : '1fr 1fr',
-            gap: isMobile ? '2rem' : isTablet ? '3rem' : '4rem',
-            alignItems: 'start'
-          }}>
-            {/* Left: Overview */}
-            <div>
-              <h2 style={{
-                fontSize: isMobile ? '2rem' : '2.5rem',
-                fontWeight: 'bold',
-                color: '#111827',
-                marginBottom: '1.5rem'
-              }}>
-                Our Mission
-              </h2>
-              <p style={{
-                fontSize: isMobile ? '1rem' : '1.125rem',
-                color: '#374151',
-                lineHeight: '1.8',
-                marginBottom: '1.5rem'
-              }}>
-                Stratum Wound Care is a premier wound care clinic serving patients throughout Pennsylvania. Our clinic operates under an MSO-PC (Management Services Organization - Professional Corporation) model, ensuring the highest standards of both clinical care and operational excellence.
-              </p>
-              <p style={{
-                fontSize: isMobile ? '1rem' : '1.125rem',
-                color: '#374151',
-                lineHeight: '1.8',
-                marginBottom: '1.5rem'
-              }}>
-                Providing advanced wound healing and limb preservation to help patients stay safe, healthy, and home. We are committed to delivering evidence-based, compassionate care that improves outcomes and enhances quality of life for every patient we serve.
-              </p>
-              <p style={{
-                fontSize: isMobile ? '1rem' : '1.125rem',
-                color: '#374151',
-                lineHeight: '1.8'
-              }}>
-                With deep roots in home health and community-based wound care, our team brings decades of combined experience in treating complex wounds. We understand that every patient's healing journey is unique, and we tailor our approach to meet individual needs.
-              </p>
-            </div>
-
-            {/* Right: Image Placeholder */}
-            <div>
-              <ImagePlaceholder
-                height={isMobile ? '300px' : '450px'}
-                text="Our Team of Healthcare Professionals"
-                subtext="Dedicated wound care specialists committed to your healing"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Photo Section */}
-      <section style={{
-        backgroundColor: '#ffffff',
-        paddingTop: isMobile ? '3rem' : '4rem',
-        paddingBottom: isMobile ? '3rem' : '4rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem'
-        }}>
-          <ImagePlaceholder
-            height={isMobile ? '300px' : isTablet ? '400px' : '500px'}
-            text="Our State-of-the-Art Facility"
-            subtext="Modern equipment and comfortable patient environment"
-          />
-        </div>
-      </section>
-
-      {/* Leadership - Mark Hoffner Section */}
-      <section style={{
-        backgroundColor: '#ffffff',
-        paddingTop: isMobile ? '3rem' : '5rem',
-        paddingBottom: isMobile ? '3rem' : '5rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem'
-        }}>
-          <h2 style={{
-            fontSize: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
-            fontWeight: 'bold',
-            color: '#111827',
-            marginBottom: isMobile ? '2rem' : '3rem',
-            textAlign: 'center'
-          }}>
-            Leadership
-          </h2>
-
-          {/* Mark Hoffner Bio */}
-          <div style={{
-            backgroundColor: '#f9fafb',
-            borderRadius: '16px',
-            padding: isMobile ? '2rem' : '3rem',
-            marginBottom: isMobile ? '3rem' : '4rem',
-            border: '1px solid #e5e7eb'
-          }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile || isTablet ? '1fr' : '300px 1fr',
-              gap: isMobile ? '2rem' : isTablet ? '2.5rem' : '3rem',
-              alignItems: 'start'
-            }}>
-              {/* Photo Placeholder */}
-              <div style={{
-                backgroundColor: '#e5e7eb',
-                borderRadius: '12px',
-                padding: '2rem',
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '300px',
-                border: '2px dashed #9ca3af'
-              }}>
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '1rem',
-                  marginTop: '1rem',
-                  fontWeight: '600'
-                }}>
-                  [Mark Hoffner Photo]
-                </p>
-                <p style={{
-                  color: '#9ca3af',
-                  fontSize: '0.875rem',
-                  marginTop: '0.5rem'
-                }}>
-                  Professional headshot
-                </p>
-              </div>
-
-              {/* Bio Content */}
-              <div>
-                <h3 style={{
-                  fontSize: isMobile ? '1.75rem' : '2rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '0.5rem'
-                }}>
-                  Mark Hoffner
-                </h3>
-                <p style={{
-                  fontSize: isMobile ? '1rem' : '1.125rem',
-                  color: '#6b7280',
-                  fontWeight: '600',
-                  marginBottom: '1.5rem'
-                }}>
-                  Founder & Chief Executive Officer
-                </p>
-                <p style={{
-                  fontSize: isMobile ? '1rem' : '1.125rem',
-                  color: '#374151',
-                  lineHeight: '1.8',
-                  marginBottom: '1.5rem'
-                }}>
-                  Mark Hoffner leads Stratum Wound Care with a commitment to turning clinical excellence into tangible patient benefits. Drawing on extensive hands-on experience in wound management, infection prevention, and coordinated care, he guides a multisite network focused on delivering compassionate, high-quality outcomes.
-                </p>
-                <p style={{
-                  fontSize: isMobile ? '1rem' : '1.125rem',
-                  color: '#374151',
-                  lineHeight: '1.8'
-                }}>
-                  As an executive, Mark builds and mentors cross-functional teams, standardizes best practices, and shapes policies that support sustainable growth and resilient operations. He champions patient-centered care, clinician development, and strategic collaboration to elevate the standard of wound care.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Vision Statement */}
-          <div style={{
-            backgroundColor: colors.primary.navy,
-            borderRadius: '16px',
-            padding: isMobile ? '2rem' : '3rem',
-            textAlign: 'center'
-          }}>
-            <h3 style={{
-              fontSize: isMobile ? '1.5rem' : '2rem',
-              fontWeight: 'bold',
-              color: '#ffffff',
-              marginBottom: '1.5rem'
-            }}>
-              Our Vision
-            </h3>
-            <p style={{
-              fontSize: isMobile ? '1rem' : '1.25rem',
-              color: '#d1d5db',
-              lineHeight: '1.8',
-              maxWidth: '900px',
+      <div>
+        {/* Header Section with Gradient */}
+        <section
+          style={{
+            paddingTop: isMobile ? '180px' : '210px',
+            paddingBottom: isMobile ? '2.5rem' : '3rem',
+            background: `linear-gradient(to bottom, ${colors.neutral.offWhite} 0%, ${colors.primary.white} 100%)`,
+            textAlign: 'center',
+            position: 'relative'
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
               marginLeft: 'auto',
               marginRight: 'auto'
-            }}>
-              To transform wound care into a consistently restorative experience where every patient achieves optimal healing and quality of life. By integrating innovative clinical concepts with data-driven operations, we will expand access to exceptional wound care across multiple sites, empower care teams with the tools and training they need, and forge lasting partnerships with patients, families, and providers. Our aim is to set new benchmarks for outcomes, compassion, and value in wound care, today and for the future.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Clinical Team Section */}
-      <section style={{
-        backgroundColor: '#f9fafb',
-        paddingTop: isMobile ? '3rem' : '4rem',
-        paddingBottom: isMobile ? '3rem' : '4rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem'
-        }}>
-          <h2 style={{
-            fontSize: isMobile ? '2rem' : isTablet ? '2.25rem' : '2.5rem',
-            fontWeight: 'bold',
-            color: '#111827',
-            marginBottom: '1rem',
-            textAlign: 'center'
-          }}>
-            Our Clinical Team
-          </h2>
-          <p style={{
-            fontSize: isMobile ? '1rem' : '1.125rem',
-            color: '#6b7280',
-            textAlign: 'center',
-            marginBottom: isMobile ? '2rem' : '3rem',
-            maxWidth: '700px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}>
-            Meet the experienced professionals dedicated to your care
-          </p>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-            gap: isMobile ? '1.5rem' : '2rem'
-          }}>
-            {[
-              {
-                title: "Medical Director",
-                role: "Board-Certified Physician",
-                description: "Specialized in wound care and limb preservation with over 15 years of experience"
-              },
-              {
-                title: "Clinical Director",
-                role: "Nurse Practitioner",
-                description: "Expert in advanced wound management and patient education"
-              },
-              {
-                title: "Nursing Team Lead",
-                role: "Registered Nurse",
-                description: "Coordinates patient care and clinical protocols"
-              },
-              {
-                title: "Podiatry Partner",
-                role: "DPM Specialist",
-                description: "Focuses on diabetic foot care and limb preservation"
-              },
-              {
-                title: "Endocrinology Partner",
-                role: "MD, FACE",
-                description: "Manages metabolic factors affecting wound healing"
-              },
-              {
-                title: "Support Team",
-                role: "Clinical & Administrative",
-                description: "Dedicated staff ensuring seamless patient experience"
-              }
-            ].map((member, index) => (
-              <div
-                key={index}
-                style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  padding: isMobile ? '1.5rem' : '2rem',
-                  border: '1px solid #e5e7eb',
-                  textAlign: 'center'
-                }}
-              >
-                <div style={{
-                  width: '80px',
-                  height: '80px',
-                  backgroundColor: '#e5e7eb',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  marginBottom: '1rem',
-                  border: '2px dashed #9ca3af'
-                }}>
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                </div>
-                <h3 style={{
-                  fontSize: isMobile ? '1.125rem' : '1.25rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '0.5rem'
-                }}>
-                  {member.title}
-                </h3>
-                <p style={{
-                  fontSize: '0.875rem',
-                  color: '#6b7280',
-                  fontWeight: '600',
-                  marginBottom: '1rem'
-                }}>
-                  {member.role}
-                </p>
-                <p style={{
-                  fontSize: '0.875rem',
-                  color: '#374151',
-                  lineHeight: '1.6'
-                }}>
-                  {member.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Compliance & Certifications Section */}
-      <section style={{
-        backgroundColor: '#ffffff',
-        paddingTop: isMobile ? '3rem' : '4rem',
-        paddingBottom: isMobile ? '3rem' : '4rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem'
-        }}>
-          <h2 style={{
-            fontSize: isMobile ? '2rem' : isTablet ? '2.25rem' : '2.5rem',
-            fontWeight: 'bold',
-            color: '#111827',
-            marginBottom: isMobile ? '2rem' : '3rem',
-            textAlign: 'center'
-          }}>
-            Compliance & Certifications
-          </h2>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr' : '1fr 1fr',
-            gap: isMobile ? '1.5rem' : '2rem'
-          }}>
-            {/* Regulatory Compliance */}
-            <div style={{
-              backgroundColor: '#f9fafb',
-              borderRadius: '12px',
-              padding: isMobile ? '1.5rem' : '2rem',
-              border: '1px solid #e5e7eb'
-            }}>
-              <h3 style={{
-                fontSize: isMobile ? '1.5rem' : '1.75rem',
-                fontWeight: 'bold',
-                color: '#111827',
-                marginBottom: '1.5rem'
-              }}>
-                Regulatory Compliance
-              </h3>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {[
-                  "CMS (Centers for Medicare & Medicaid Services) certified",
-                  "Pennsylvania Department of Health licensed",
-                  "HIPAA compliant with secure data practices",
-                  "Corporate practice of medicine compliant (MSO-PC structure)",
-                  "EIN and NPI registered",
-                  "Comprehensive malpractice insurance coverage"
-                ].map((item, index) => (
-                  <li key={index} style={{ display: 'flex', alignItems: 'start' }}>
-                    <span style={{
-                      color: '#374151',
-                      fontSize: '1.25rem',
-                      marginRight: '0.75rem',
-                      flexShrink: 0
-                    }}>✓</span>
-                    <span style={{
-                      color: '#374151',
-                      fontSize: isMobile ? '0.875rem' : '1rem',
-                      lineHeight: '1.6'
-                    }}>
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <div style={{
-                marginTop: '1.5rem',
-                paddingTop: '1.5rem',
-                borderTop: '1px solid #e5e7eb'
-              }}>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6'
-                }}>
-                  Our MSO (Management Services Organization) and PC (Professional Corporation) structure operates under a Management Services Agreement (MSA), ensuring physician ownership of clinical operations while maintaining operational excellence and compliance with Pennsylvania corporate practice of medicine laws.
-                </p>
-              </div>
-            </div>
-
-            {/* Business Structure */}
-            <div style={{
-              backgroundColor: '#f9fafb',
-              borderRadius: '12px',
-              padding: isMobile ? '1.5rem' : '2rem',
-              border: '1px solid #e5e7eb'
-            }}>
-              <h3 style={{
-                fontSize: isMobile ? '1.5rem' : '1.75rem',
-                fontWeight: 'bold',
-                color: '#111827',
-                marginBottom: '1.5rem'
-              }}>
-                Business Structure
-              </h3>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {[
-                  "MSO (Management Services Organization) for operational excellence",
-                  "PC (Professional Corporation) with physician ownership",
-                  "Management Services Agreement (MSA) framework",
-                  "Business liability coverage and risk management"
-                ].map((item, index) => (
-                  <li key={index} style={{ display: 'flex', alignItems: 'start' }}>
-                    <span style={{
-                      color: '#374151',
-                      fontSize: '1.25rem',
-                      marginRight: '0.75rem',
-                      flexShrink: 0
-                    }}>✓</span>
-                    <span style={{
-                      color: '#374151',
-                      fontSize: isMobile ? '0.875rem' : '1rem',
-                      lineHeight: '1.6'
-                    }}>
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <div style={{
-                marginTop: '1.5rem',
-                paddingTop: '1.5rem',
-                borderTop: '1px solid #e5e7eb'
-              }}>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  lineHeight: '1.6'
-                }}>
-                  Majority control via MSO ensures operational efficiency while physician ownership of the PC maintains clinical autonomy and compliance with Pennsylvania corporate practice of medicine regulations.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section style={{
-        backgroundColor: colors.primary.navy,
-        paddingTop: isMobile ? '3rem' : '4rem',
-        paddingBottom: isMobile ? '3rem' : '4rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          textAlign: 'center'
-        }}>
-          <h2 style={{
-            fontSize: isMobile ? '1.75rem' : isTablet ? '2.25rem' : '2.5rem',
-            fontWeight: 'bold',
-            color: '#ffffff',
-            marginBottom: '1rem'
-          }}>
-            Join Our Community of Healing
-          </h2>
-          <p style={{
-            fontSize: isMobile ? '1rem' : isTablet ? '1.125rem' : '1.25rem',
-            color: '#d1d5db',
-            marginBottom: '2rem',
-            maxWidth: '600px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}>
-            Experience the difference that compassionate, expert wound care can make
-          </p>
-          <div style={{
-            display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
-            gap: '1rem',
-            justifyContent: 'center'
-          }}>
-            <Link
-              href="/contact"
+            }}
+          >
+            <h1
+              className="font-bold"
               style={{
-                background: colors.gradients.blueGreen,
-                color: '#ffffff',
-                padding: isMobile ? '0.875rem 2rem' : '1rem 2.5rem',
-                borderRadius: '8px',
-                fontWeight: 'bold',
-                fontSize: isMobile ? '1rem' : '1.125rem',
-                textDecoration: 'none',
-                display: 'inline-block',
-                transition: 'all 0.3s',
-                border: `2px solid ${colors.primary.blue}`,
-                boxShadow: `0 4px 12px rgba(8, 145, 220, 0.3)`
+                fontSize: isMobile ? '2rem' : '3rem',
+                color: colors.primary.navy,
+                letterSpacing: '0.03em',
+                textTransform: 'uppercase',
+                marginBottom: '1rem',
+                lineHeight: '1.2'
               }}
             >
-              Schedule an Appointment
-            </Link>
+              GET TO KNOW KIM ELECTRIC LLC
+            </h1>
+            <div
+              style={{
+                width: isMobile ? '60px' : '80px',
+                height: '4px',
+                backgroundColor: colors.primary.navy,
+                margin: '0 auto'
+              }}
+            />
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* About Us & Service Areas */}
+        <section
+          style={{
+            paddingTop: isMobile ? '3rem' : '5rem',
+            paddingBottom: isMobile ? '3rem' : '5rem',
+            backgroundColor: colors.primary.white
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto'
+            }}
+          >
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                gap: isMobile ? '2rem' : '3rem',
+                alignItems: 'start'
+              }}
+            >
+              {/* About Us */}
+              <div
+                style={{
+                  backgroundColor: colors.neutral.offWhite,
+                  padding: isMobile ? '2rem' : '2.5rem',
+                  borderRadius: '4px',
+                  border: `2px solid ${colors.secondary.borderGray}`,
+                  borderLeft: `6px solid ${colors.primary.navy}`,
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.06)'
+                }}
+              >
+                <h2
+                  className="font-bold"
+                  style={{
+                    fontSize: isMobile ? '2rem' : '2.25rem',
+                    color: colors.primary.navy,
+                    marginBottom: isMobile ? '1.5rem' : '2rem',
+                    lineHeight: '1.2'
+                  }}
+                >
+                  ABOUT US
+                </h2>
+                <p
+                  style={{
+                    fontSize: isMobile ? '1rem' : '1.0625rem',
+                    color: colors.neutral.darkGray,
+                    lineHeight: '1.9',
+                    marginBottom: '2rem',
+                    fontWeight: '400'
+                  }}
+                >
+                  Kim Electric is a fire alarm systems and monitoring company. Located at Palisades Park NJ, Kim Electric LLC provides:
+                </p>
+
+                <div style={{ marginBottom: '2rem' }}>
+                  <p
+                    className="font-bold"
+                    style={{
+                      fontSize: isMobile ? '1rem' : '1.0625rem',
+                      color: colors.primary.navy,
+                      marginBottom: '1.25rem',
+                      lineHeight: '1.6'
+                    }}
+                  >
+                    Fire Alarm systems and monitoring for over 60+ businesses throughout New Jersey, which includes:
+                  </p>
+                  <ul
+                    style={{
+                      listStyleType: 'none',
+                      paddingLeft: '0',
+                      color: colors.neutral.darkGray,
+                      fontSize: isMobile ? '0.9375rem' : '1rem',
+                      lineHeight: '2.2'
+                    }}
+                  >
+                    <li style={{ paddingLeft: '1.5rem', position: 'relative' }}>
+                      <span style={{ position: 'absolute', left: '0', color: colors.primary.navy, fontWeight: 'bold' }}>•</span>
+                      24/7 fire alarm systems monitoring
+                    </li>
+                    <li style={{ paddingLeft: '1.5rem', position: 'relative' }}>
+                      <span style={{ position: 'absolute', left: '0', color: colors.primary.navy, fontWeight: 'bold' }}>•</span>
+                      Maintenance
+                    </li>
+                    <li style={{ paddingLeft: '1.5rem', position: 'relative' }}>
+                      <span style={{ position: 'absolute', left: '0', color: colors.primary.navy, fontWeight: 'bold' }}>•</span>
+                      New fire alarm system installations
+                    </li>
+                    <li style={{ paddingLeft: '1.5rem', position: 'relative' }}>
+                      <span style={{ position: 'absolute', left: '0', color: colors.primary.navy, fontWeight: 'bold' }}>•</span>
+                      Yearly inspections and reports
+                    </li>
+                  </ul>
+                </div>
+
+                <p
+                  style={{
+                    fontSize: isMobile ? '1rem' : '1.0625rem',
+                    color: colors.neutral.darkGray,
+                    lineHeight: '1.9',
+                    fontWeight: '400'
+                  }}
+                >
+                  Construction and electrical wiring of small businesses.
+                </p>
+              </div>
+
+              {/* Service Areas */}
+              <div
+                style={{
+                  backgroundColor: colors.neutral.offWhite,
+                  padding: isMobile ? '2rem' : '2.5rem',
+                  borderRadius: '4px',
+                  border: `2px solid ${colors.secondary.borderGray}`,
+                  borderLeft: `6px solid ${colors.primary.navy}`,
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.06)'
+                }}
+              >
+                <h2
+                  className="font-bold"
+                  style={{
+                    fontSize: isMobile ? '2rem' : '2.25rem',
+                    color: colors.primary.navy,
+                    marginBottom: isMobile ? '1.5rem' : '2rem',
+                    lineHeight: '1.2'
+                  }}
+                >
+                  PROUDLY SERVICING OUR CUSTOMERS IN:
+                </h2>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr',
+                    gap: '1rem'
+                  }}
+                >
+                  {serviceAreas.map((pair, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: isMobile ? '0.9375rem' : '1rem',
+                        color: colors.neutral.darkGray,
+                        lineHeight: '1.6',
+                        paddingBottom: '0.75rem',
+                        borderBottom: index < serviceAreas.length - 1 ? `1px solid ${colors.secondary.borderGray}` : 'none'
+                      }}
+                    >
+                      <span style={{
+                        color: colors.primary.navy,
+                        fontWeight: 'bold',
+                        fontSize: '1.2rem',
+                        marginRight: '0.75rem'
+                      }}>•</span>
+                      <span style={{ fontWeight: '500' }}>{pair[0]}</span>
+                      <span style={{
+                        color: colors.primary.navy,
+                        fontWeight: 'bold',
+                        fontSize: '1.2rem',
+                        margin: '0 1rem'
+                      }}>•</span>
+                      <span style={{ fontWeight: '500' }}>{pair[1]}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* About Us Image */}
+        <section
+          style={{
+            paddingTop: isMobile ? '2rem' : '3rem',
+            paddingBottom: isMobile ? '3rem' : '5rem',
+            backgroundColor: colors.neutral.offWhite
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto'
+            }}
+          >
+            <img
+              src="/aboutus.webp"
+              alt="About Kim Electric LLC"
+              style={{
+                width: '100%',
+                height: 'auto',
+                objectFit: 'contain',
+                borderRadius: '4px',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08)',
+                border: `3px solid ${colors.secondary.borderGray}`,
+                display: 'block'
+              }}
+            />
+          </div>
+        </section>
+
+        {/* Our Team */}
+        <section
+          style={{
+            paddingTop: isMobile ? '4rem' : '6rem',
+            paddingBottom: isMobile ? '4rem' : '6rem',
+            backgroundColor: colors.primary.white
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto'
+            }}
+          >
+            <div style={{ textAlign: 'center', marginBottom: isMobile ? '3rem' : '4rem' }}>
+              <h2
+                className="font-bold"
+                style={{
+                  fontSize: isMobile ? '2.25rem' : '3rem',
+                  color: colors.primary.navy,
+                  marginBottom: '1rem',
+                  lineHeight: '1.2'
+                }}
+              >
+                OUR TEAM
+              </h2>
+              <div
+                style={{
+                  width: isMobile ? '60px' : '80px',
+                  height: '4px',
+                  backgroundColor: colors.primary.navy,
+                  margin: '0 auto'
+                }}
+              />
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+                gap: isMobile ? '2rem' : '2.5rem'
+              }}
+            >
+              {teamMembers.map((member, index) => (
+                <div
+                  key={index}
+                  style={{
+                    backgroundColor: colors.neutral.offWhite,
+                    padding: isMobile ? '2.5rem' : '3rem',
+                    borderRadius: '4px',
+                    border: `2px solid ${colors.secondary.borderGray}`,
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.06)',
+                    textAlign: 'center',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
+                    borderTop: `5px solid ${colors.primary.navy}`,
+                    position: 'relative'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isMobile) {
+                      e.currentTarget.style.transform = 'translateY(-8px)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.15), 0 12px 32px rgba(0, 0, 0, 0.1)';
+                      e.currentTarget.style.borderColor = colors.primary.navy;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isMobile) {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.06)';
+                      e.currentTarget.style.borderColor = colors.secondary.borderGray;
+                    }
+                  }}
+                >
+                  <div
+                    style={{
+                      width: isMobile ? '60px' : '70px',
+                      height: isMobile ? '60px' : '70px',
+                      backgroundColor: colors.primary.navy,
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      margin: '0 auto 1.5rem',
+                      fontSize: isMobile ? '1.75rem' : '2rem',
+                      color: colors.primary.white,
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    {member.name.charAt(0)}
+                  </div>
+                  <h3
+                    className="font-bold"
+                    style={{
+                      fontSize: isMobile ? '1.5rem' : '1.875rem',
+                      color: colors.primary.navy,
+                      marginBottom: '0.5rem',
+                      lineHeight: '1.2'
+                    }}
+                  >
+                    {member.name}
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: isMobile ? '1rem' : '1.0625rem',
+                      color: colors.secondary.mediumGray,
+                      marginBottom: member.phone ? '1.25rem' : '1.5rem',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      fontSize: isMobile ? '0.875rem' : '0.9375rem'
+                    }}
+                  >
+                    {member.title}
+                  </p>
+                  {member.phone && (
+                    <p
+                      style={{
+                        fontSize: isMobile ? '1.125rem' : '1.25rem',
+                        color: colors.primary.navy,
+                        marginBottom: '1.5rem',
+                        fontWeight: 'bold',
+                        letterSpacing: '0.5px'
+                      }}
+                    >
+                      {member.phone}
+                    </p>
+                  )}
+                  <div
+                    style={{
+                      borderTop: `2px solid ${colors.secondary.borderGray}`,
+                      paddingTop: '1.25rem',
+                      marginTop: '1.25rem'
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontSize: isMobile ? '0.9375rem' : '1rem',
+                        color: colors.neutral.darkGray,
+                        lineHeight: '1.7',
+                        fontWeight: '400'
+                      }}
+                    >
+                      {member.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Footer Info Section */}
+        <section
+          style={{
+            paddingTop: isMobile ? '4rem' : '5rem',
+            paddingBottom: isMobile ? '4rem' : '5rem',
+            background: colors.gradients.navy,
+            color: colors.primary.white
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              textAlign: 'center'
+            }}
+          >
+            <h3
+              className="font-bold"
+              style={{
+                fontSize: isMobile ? '2rem' : '2.5rem',
+                marginBottom: '0.5rem',
+                letterSpacing: '0.02em'
+              }}
+            >
+              Kim Electric LLC
+            </h3>
+            <p
+              style={{
+                fontSize: isMobile ? '1.375rem' : '1.625rem',
+                marginBottom: '2.5rem',
+                fontWeight: '600',
+                letterSpacing: '1px'
+              }}
+            >
+              201-919-5006
+            </p>
+            <div
+              style={{
+                borderTop: `2px solid rgba(255, 255, 255, 0.3)`,
+                paddingTop: '2.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                fontSize: isMobile ? '0.9375rem' : '1rem',
+                opacity: 0.95
+              }}
+            >
+              <p style={{ fontWeight: '500' }}>State of New Jersey Fire Protection Contractor Permit No. P01654</p>
+              <p style={{ fontWeight: '500' }}>NJ HIC License No. 13VH12649700</p>
+              <p style={{ marginTop: '1.5rem', opacity: 0.8, fontSize: isMobile ? '0.875rem' : '0.9375rem' }}>
+                Copyright © 2024 kimelectricllc - All Rights Reserved.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
     </PageTransition>
   );
 }

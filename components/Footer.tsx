@@ -1,58 +1,54 @@
 'use client';
 
 import Link from 'next/link';
-import Icon from './Icon';
+import Image from 'next/image';
 import { colors } from '@/lib/colors';
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: colors.primary.navy, color: '#ffffff' }}>
+    <footer style={{ backgroundColor: colors.primary.navy, color: colors.primary.white }}>
       <div style={{
-        maxWidth: '1400px',
+        maxWidth: '1200px',
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingLeft: '2rem',
         paddingRight: '2rem',
         paddingTop: '3rem',
-        paddingBottom: '3rem'
+        paddingBottom: '2rem'
       }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '2.5rem',
+          gap: '3rem',
           marginBottom: '2.5rem'
         }}>
           {/* Company Info */}
           <div>
-            <h3 style={{
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              marginBottom: '1rem',
-              color: '#ffffff'
-            }}>
-              Stratum Wound Care
-            </h3>
+            <Image
+              src="/logo.png"
+              alt="Kim Electric LLC"
+              width={140}
+              height={47}
+              style={{
+                objectFit: 'contain',
+                marginBottom: '1rem'
+              }}
+            />
             <p style={{
               fontSize: '0.875rem',
-              color: '#cbd5e1',
+              color: '#D1D5DB',
               lineHeight: '1.6',
               marginBottom: '1rem'
             }}>
-              Providing advanced wound healing and limb preservation to help patients stay safe, healthy, and home.
+              Fire Protection - Commercial & Residential
             </p>
             <div style={{ marginTop: '1.5rem' }}>
               <p style={{
                 fontSize: '0.875rem',
-                color: '#94a3b8',
+                color: '#9CA3AF',
                 marginBottom: '0.5rem'
               }}>
-                55R Broadway
-              </p>
-              <p style={{
-                fontSize: '0.875rem',
-                color: '#94a3b8'
-              }}>
-                Bangor, PA 18013
+                Contact us for professional fire protection services
               </p>
             </div>
           </div>
@@ -62,31 +58,28 @@ export default function Footer() {
             <h4 style={{
               fontSize: '1.125rem',
               fontWeight: '600',
-              marginBottom: '1rem',
-              color: '#ffffff'
+              marginBottom: '1rem'
             }}>
               Quick Links
             </h4>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[
+                { name: 'Home', href: '/' },
+                { name: 'Online Payment', href: '/payment' },
                 { name: 'About Us', href: '/about' },
-                { name: 'Services', href: '/services' },
-                { name: 'Patient Information', href: '/patients' },
-                { name: 'Provider Referrals', href: '/providers' },
-                { name: 'Careers', href: '/careers' },
-                { name: 'Contact', href: '/contact' }
+                { name: 'Contact Us', href: '/contact' }
               ].map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     style={{
                       fontSize: '0.875rem',
-                      color: '#cbd5e1',
+                      color: '#D1D5DB',
                       textDecoration: 'none',
                       transition: 'color 0.3s'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = colors.primary.blue}
-                    onMouseLeave={(e) => e.currentTarget.style.color = '#cbd5e1'}
+                    onMouseEnter={(e) => e.currentTarget.style.color = colors.primary.white}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#D1D5DB'}
                   >
                     {link.name}
                   </Link>
@@ -95,144 +88,69 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Services */}
           <div>
             <h4 style={{
               fontSize: '1.125rem',
               fontWeight: '600',
-              marginBottom: '1rem',
-              color: '#ffffff'
+              marginBottom: '1rem'
             }}>
-              Contact Information
+              Our Services
             </h4>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Icon type="phone" size={18} color="#cbd5e1" />
-                <a
-                  href="tel:555-123-4567"
-                  style={{
-                    fontSize: '0.875rem',
-                    color: '#cbd5e1',
-                    textDecoration: 'none'
-                  }}
-                >
-                  (555) 123-4567
-                </a>
+              <li style={{ fontSize: '0.875rem', color: '#D1D5DB' }}>
+                Fire Alarm Systems
               </li>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Icon type="fax" size={18} color="#cbd5e1" />
-                <span style={{ fontSize: '0.875rem', color: '#cbd5e1' }}>
-                  (555) 123-4568
-                </span>
+              <li style={{ fontSize: '0.875rem', color: '#D1D5DB' }}>
+                Fire Alarm Monitoring
               </li>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Icon type="mail" size={18} color="#cbd5e1" />
-                <a
-                  href="mailto:info@stratumwoundcare.com"
-                  style={{
-                    fontSize: '0.875rem',
-                    color: '#cbd5e1',
-                    textDecoration: 'none'
-                  }}
-                >
-                  info@stratumwoundcare.com
-                </a>
+              <li style={{ fontSize: '0.875rem', color: '#D1D5DB' }}>
+                Commercial Services
               </li>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Icon type="emergency" size={18} color={colors.primary.green} />
-                <a
-                  href="tel:555-123-9999"
-                  style={{
-                    fontSize: '0.875rem',
-                    color: colors.primary.green,
-                    textDecoration: 'none',
-                    fontWeight: '600'
-                  }}
-                >
-                  Emergency: (555) 123-9999
-                </a>
+              <li style={{ fontSize: '0.875rem', color: '#D1D5DB' }}>
+                Residential Services
               </li>
             </ul>
           </div>
+        </div>
 
-          {/* Office Hours */}
-          <div>
-            <h4 style={{
-              fontSize: '1.125rem',
-              fontWeight: '600',
-              marginBottom: '1rem',
-              color: '#ffffff'
-            }}>
-              Office Hours
-            </h4>
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li style={{ fontSize: '0.875rem', color: '#cbd5e1' }}>
-                <strong style={{ color: '#ffffff' }}>Mon - Fri:</strong> 8:00 AM - 5:00 PM
-              </li>
-              <li style={{ fontSize: '0.875rem', color: '#cbd5e1' }}>
-                <strong style={{ color: '#ffffff' }}>Saturday:</strong> 9:00 AM - 1:00 PM
-              </li>
-              <li style={{ fontSize: '0.875rem', color: '#cbd5e1' }}>
-                <strong style={{ color: '#ffffff' }}>Sunday:</strong> Closed
-              </li>
-            </ul>
-            <div style={{ marginTop: '1.5rem' }}>
-              <Link
-                href="/contact"
-                style={{
-                  display: 'inline-block',
-                  background: colors.gradients.blueGreen,
-                  color: '#ffffff',
-                  padding: '0.75rem 1.5rem',
-                  borderRadius: '8px',
-                  fontSize: '0.875rem',
-                  fontWeight: 'bold',
-                  textDecoration: 'none',
-                  transition: 'all 0.3s',
-                  border: `2px solid ${colors.primary.blue}`
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = colors.secondary.lightBlue;
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = colors.gradients.blueGreen;
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                Schedule Appointment
-              </Link>
-            </div>
+        {/* Licensing & Credentials */}
+        <div style={{
+          borderTop: '1px solid #4B5563',
+          paddingTop: '2rem',
+          marginBottom: '1.5rem'
+        }}>
+          <h4 style={{
+            fontSize: '1rem',
+            fontWeight: '600',
+            marginBottom: '1rem'
+          }}>
+            Licensed & Certified
+          </h4>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+            fontSize: '0.875rem',
+            color: '#9CA3AF'
+          }}>
+            <p>State of New Jersey Fire Protection Contractor Permit No. P01654</p>
+            <p>NJ HIC License No. 13VH12649700</p>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div style={{
-          borderTop: '1px solid #334155',
-          paddingTop: '2rem',
+          borderTop: '1px solid #4B5563',
+          paddingTop: '1.5rem',
           textAlign: 'center'
         }}>
           <p style={{
             fontSize: '0.875rem',
-            color: '#94a3b8',
-            marginBottom: '0.75rem'
+            color: '#9CA3AF'
           }}>
-            &copy; {new Date().getFullYear()} Stratum Wound Care. All rights reserved.
+            &copy; {new Date().getFullYear()} Kim Electric LLC. All rights reserved.
           </p>
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '1rem',
-            fontSize: '0.75rem',
-            color: '#64748b'
-          }}>
-            <span>HIPAA Compliant</span>
-            <span>•</span>
-            <span>Medicare & Medicaid Certified</span>
-            <span>•</span>
-            <span>Licensed by PA Department of Health</span>
-          </div>
         </div>
       </div>
     </footer>

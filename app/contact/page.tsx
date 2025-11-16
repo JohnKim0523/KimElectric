@@ -2,9 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import PageTransition from '@/components/PageTransition';
-import Icon from '@/components/Icon';
-import ImagePlaceholder from '@/components/ImagePlaceholder';
-import Link from 'next/link';
 import { colors } from '@/lib/colors';
 
 export default function ContactPage() {
@@ -13,9 +10,7 @@ export default function ContactPage() {
     name: '',
     email: '',
     phone: '',
-    preferredContact: 'email',
-    appointmentType: '',
-    insurance: '',
+    address: '',
     message: '',
   });
 
@@ -30,9 +25,8 @@ export default function ContactPage() {
   }, []);
 
   const isMobile = windowWidth < 768;
-  const isTablet = windowWidth >= 768 && windowWidth < 1024;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -59,9 +53,7 @@ export default function ContactPage() {
           name: '',
           email: '',
           phone: '',
-          preferredContact: 'email',
-          appointmentType: '',
-          insurance: '',
+          address: '',
           message: '',
         });
       } else {
@@ -76,301 +68,131 @@ export default function ContactPage() {
 
   return (
     <PageTransition>
-    <div style={{ paddingTop: '130px' }}>
-      {/* Hero Header Section */}
-      <section style={{
-        backgroundColor: colors.primary.navy,
-        paddingTop: isMobile ? '3rem' : '4rem',
-        paddingBottom: isMobile ? '3rem' : '4rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem'
-        }}>
-          <h1 style={{
-            fontSize: isMobile ? '2.5rem' : isTablet ? '3rem' : '3.5rem',
-            fontWeight: 'bold',
-            color: '#ffffff',
-            marginBottom: '1rem'
-          }}>
-            Contact Us
-          </h1>
-          <p style={{
-            fontSize: isMobile ? '1.125rem' : isTablet ? '1.25rem' : '1.5rem',
-            color: '#d1d5db',
-            maxWidth: '800px'
-          }}>
-            Get in touch with our team for appointments, questions, or information about our wound care services
-          </p>
-        </div>
-      </section>
+      <div>
+        {/* Header Section */}
+        <section
+          style={{
+            paddingTop: isMobile ? '180px' : '210px',
+            paddingBottom: isMobile ? '3rem' : '4rem',
+            backgroundColor: colors.primary.navy,
+            color: colors.primary.white,
+            textAlign: 'center'
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto'
+            }}
+          >
+            <h1
+              className="font-bold mb-4"
+              style={{
+                fontSize: isMobile ? '2.5rem' : '4rem'
+              }}
+            >
+              Work with Us
+            </h1>
+            <p
+              style={{
+                fontSize: isMobile ? '1.125rem' : '1.5rem',
+                maxWidth: '800px',
+                margin: '0 auto'
+              }}
+            >
+              Get in touch for fire protection services
+            </p>
+          </div>
+        </section>
 
-      {/* Contact Information Cards */}
-      <section style={{
-        backgroundColor: '#ffffff',
-        paddingTop: isMobile ? '3rem' : '4rem',
-        paddingBottom: isMobile ? '3rem' : '4rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem'
-        }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-            gap: isMobile ? '1.5rem' : '2rem'
-          }}>
-            {/* Phone */}
-            <div style={{
-              backgroundColor: '#f9fafb',
-              borderRadius: '12px',
-              padding: isMobile ? '1.5rem' : '2rem',
-              border: '1px solid #e5e7eb'
-            }}>
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="phone" size={40} color="#6b7280" />
-              </div>
-              <h3 style={{
-                fontSize: isMobile ? '1.25rem' : '1.5rem',
-                fontWeight: 'bold',
-                color: '#111827',
-                marginBottom: '1rem'
-              }}>
-                Phone
-              </h3>
-              <p style={{
-                color: '#374151',
-                fontSize: isMobile ? '0.875rem' : '1rem',
-                lineHeight: '1.6',
-                marginBottom: '0.5rem'
-              }}>
-                Main: <a href="tel:555-123-4567" style={{ color: '#111827', fontWeight: '600' }}>(555) 123-4567</a>
-              </p>
-              <p style={{
-                color: '#374151',
-                fontSize: isMobile ? '0.875rem' : '1rem',
-                lineHeight: '1.6',
-                marginBottom: '0.5rem'
-              }}>
-                Provider: <a href="tel:555-123-4568" style={{ color: '#111827', fontWeight: '600' }}>(555) 123-4568</a>
-              </p>
-              <p style={{
-                color: '#dc2626',
-                fontSize: isMobile ? '0.875rem' : '1rem',
-                lineHeight: '1.6',
-                fontWeight: '600'
-              }}>
-                Emergency: <a href="tel:555-123-9999" style={{ color: '#dc2626' }}>(555) 123-9999</a>
-              </p>
-            </div>
-
-            {/* Email */}
-            <div style={{
-              backgroundColor: '#f9fafb',
-              borderRadius: '12px',
-              padding: isMobile ? '1.5rem' : '2rem',
-              border: '1px solid #e5e7eb'
-            }}>
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="mail" size={40} color="#6b7280" />
-              </div>
-              <h3 style={{
-                fontSize: isMobile ? '1.25rem' : '1.5rem',
-                fontWeight: 'bold',
-                color: '#111827',
-                marginBottom: '1rem'
-              }}>
-                Email
-              </h3>
-              <p style={{
-                color: '#374151',
-                fontSize: isMobile ? '0.875rem' : '1rem',
-                lineHeight: '1.6',
-                marginBottom: '0.5rem'
-              }}>
-                <a href="mailto:info@stratumwoundcare.com" style={{ color: '#111827', fontWeight: '600', textDecoration: 'underline' }}>
-                  info@stratumwoundcare.com
-                </a>
-              </p>
-              <p style={{
-                color: '#374151',
-                fontSize: isMobile ? '0.875rem' : '1rem',
-                lineHeight: '1.6'
-              }}>
-                <a href="mailto:referrals@stratumwoundcare.com" style={{ color: '#111827', fontWeight: '600', textDecoration: 'underline' }}>
-                  referrals@stratumwoundcare.com
-                </a>
-              </p>
-            </div>
-
-            {/* Location */}
-            <div style={{
-              backgroundColor: '#f9fafb',
-              borderRadius: '12px',
-              padding: isMobile ? '1.5rem' : '2rem',
-              border: '1px solid #e5e7eb'
-            }}>
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="mapPin" size={40} color="#6b7280" />
-              </div>
-              <h3 style={{
-                fontSize: isMobile ? '1.25rem' : '1.5rem',
-                fontWeight: 'bold',
-                color: '#111827',
-                marginBottom: '1rem'
-              }}>
-                Location
-              </h3>
-              <p style={{
-                color: '#374151',
-                fontSize: isMobile ? '0.875rem' : '1rem',
-                lineHeight: '1.6',
-                marginBottom: '0.5rem'
-              }}>
-                55R Broadway<br />
-                Bangor, PA 18013
-              </p>
-              <Link
-                href="https://www.google.com/maps/search/?api=1&query=55R+Broadway+Bangor+PA+18013"
-                target="_blank"
-                rel="noopener noreferrer"
+        {/* Contact Form & Info Section */}
+        <section
+          style={{
+            paddingTop: isMobile ? '3rem' : '5rem',
+            paddingBottom: isMobile ? '3rem' : '5rem',
+            backgroundColor: colors.neutral.offWhite
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto'
+            }}
+          >
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                gap: isMobile ? '3rem' : '4rem'
+              }}
+            >
+              {/* Contact Form */}
+              <div
                 style={{
-                  color: '#111827',
-                  fontSize: isMobile ? '0.875rem' : '1rem',
-                  fontWeight: '600',
-                  textDecoration: 'underline'
+                  backgroundColor: colors.primary.white,
+                  borderRadius: '4px',
+                  padding: isMobile ? '2rem' : '3rem',
+                  border: `2px solid ${colors.secondary.borderGray}`,
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
                 }}
               >
-                Get Directions →
-              </Link>
-            </div>
+                <h2
+                  className="font-bold mb-4"
+                  style={{
+                    fontSize: isMobile ? '2rem' : '2.5rem',
+                    color: colors.primary.navy
+                  }}
+                >
+                  Send Message
+                </h2>
 
-            {/* Office Hours */}
-            <div style={{
-              backgroundColor: '#f9fafb',
-              borderRadius: '12px',
-              padding: isMobile ? '1.5rem' : '2rem',
-              border: '1px solid #e5e7eb'
-            }}>
-              <div style={{ marginBottom: '1rem' }}>
-                <Icon type="clock" size={40} color="#6b7280" />
-              </div>
-              <h3 style={{
-                fontSize: isMobile ? '1.25rem' : '1.5rem',
-                fontWeight: 'bold',
-                color: '#111827',
-                marginBottom: '1rem'
-              }}>
-                Office Hours
-              </h3>
-              <p style={{
-                color: '#374151',
-                fontSize: isMobile ? '0.875rem' : '1rem',
-                lineHeight: '1.6'
-              }}>
-                Mon - Fri: 8:00 AM - 5:00 PM<br />
-                Saturday: 9:00 AM - 1:00 PM<br />
-                Sunday: Closed
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Comprehensive Contact Form Section */}
-      <section style={{
-        backgroundColor: '#f9fafb',
-        paddingTop: isMobile ? '3rem' : '4rem',
-        paddingBottom: isMobile ? '3rem' : '4rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem'
-        }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile || isTablet ? '1fr' : '1fr 1fr',
-            gap: isMobile ? '3rem' : '4rem',
-            alignItems: 'start'
-          }}>
-            {/* Left: Contact Form */}
-            <div style={{
-              backgroundColor: '#ffffff',
-              borderRadius: '12px',
-              padding: isMobile ? '2rem' : '3rem',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
-            }}>
-              <h2 style={{
-                fontSize: isMobile ? '2rem' : '2.5rem',
-                fontWeight: 'bold',
-                color: '#111827',
-                marginBottom: '1rem'
-              }}>
-                Schedule an Appointment
-              </h2>
-              <p style={{
-                fontSize: isMobile ? '1rem' : '1.125rem',
-                color: '#6b7280',
-                marginBottom: '2rem'
-              }}>
-                Fill out the form below and we'll get back to you within 24 hours
-              </p>
-
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                {/* Name */}
-                <div>
-                  <label style={{
-                    display: 'block',
-                    fontSize: '0.875rem',
-                    fontWeight: '600',
-                    color: '#374151',
-                    marginBottom: '0.5rem'
-                  }}>
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem 1rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '8px',
-                      fontSize: '1rem',
-                      outline: 'none',
-                      transition: 'border-color 0.3s'
-                    }}
-                    onFocus={(e) => e.currentTarget.style.borderColor = '#111827'}
-                    onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
-                  />
-                </div>
-
-                {/* Email & Phone Row */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-                  gap: '1rem'
-                }}>
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   <div>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '600',
-                      color: '#374151',
-                      marginBottom: '0.5rem'
-                    }}>
+                    <label
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        color: colors.neutral.darkGray,
+                        marginBottom: '0.5rem'
+                      }}
+                    >
+                      Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      placeholder="Name"
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        border: `1px solid ${colors.secondary.borderGray}`,
+                        borderRadius: '4px',
+                        fontSize: '1rem',
+                        outline: 'none'
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        color: colors.neutral.darkGray,
+                        marginBottom: '0.5rem'
+                      }}
+                    >
                       Email *
                     </label>
                     <input
@@ -379,28 +201,28 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={handleChange}
                       required
+                      placeholder="Email*"
                       style={{
                         width: '100%',
                         padding: '0.75rem 1rem',
-                        border: '1px solid #d1d5db',
-                        borderRadius: '8px',
+                        border: `1px solid ${colors.secondary.borderGray}`,
+                        borderRadius: '4px',
                         fontSize: '1rem',
-                        outline: 'none',
-                        transition: 'border-color 0.3s'
+                        outline: 'none'
                       }}
-                      onFocus={(e) => e.currentTarget.style.borderColor = '#111827'}
-                      onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
                     />
                   </div>
 
                   <div>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '600',
-                      color: '#374151',
-                      marginBottom: '0.5rem'
-                    }}>
+                    <label
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        color: colors.neutral.darkGray,
+                        marginBottom: '0.5rem'
+                      }}
+                    >
                       Phone *
                     </label>
                     <input
@@ -409,440 +231,309 @@ export default function ContactPage() {
                       value={formData.phone}
                       onChange={handleChange}
                       required
+                      placeholder="Phone"
                       style={{
                         width: '100%',
                         padding: '0.75rem 1rem',
-                        border: '1px solid #d1d5db',
-                        borderRadius: '8px',
+                        border: `1px solid ${colors.secondary.borderGray}`,
+                        borderRadius: '4px',
                         fontSize: '1rem',
-                        outline: 'none',
-                        transition: 'border-color 0.3s'
+                        outline: 'none'
                       }}
-                      onFocus={(e) => e.currentTarget.style.borderColor = '#111827'}
-                      onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
                     />
                   </div>
-                </div>
 
-                {/* Preferred Contact Method */}
-                <div>
-                  <label style={{
-                    display: 'block',
-                    fontSize: '0.875rem',
-                    fontWeight: '600',
-                    color: '#374151',
-                    marginBottom: '0.5rem'
-                  }}>
-                    Preferred Contact Method
-                  </label>
-                  <select
-                    name="preferredContact"
-                    value={formData.preferredContact}
-                    onChange={handleChange}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem 1rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '8px',
-                      fontSize: '1rem',
-                      outline: 'none',
-                      backgroundColor: '#ffffff',
-                      transition: 'border-color 0.3s'
-                    }}
-                    onFocus={(e) => e.currentTarget.style.borderColor = '#111827'}
-                    onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
-                  >
-                    <option value="email">Email</option>
-                    <option value="phone">Phone</option>
-                  </select>
-                </div>
-
-                {/* Appointment Type & Insurance Row */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-                  gap: '1rem'
-                }}>
                   <div>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '600',
-                      color: '#374151',
-                      marginBottom: '0.5rem'
-                    }}>
-                      Appointment Type
-                    </label>
-                    <select
-                      name="appointmentType"
-                      value={formData.appointmentType}
-                      onChange={handleChange}
+                    <label
                       style={{
-                        width: '100%',
-                        padding: '0.75rem 1rem',
-                        border: '1px solid #d1d5db',
-                        borderRadius: '8px',
-                        fontSize: '1rem',
-                        outline: 'none',
-                        backgroundColor: '#ffffff',
-                        transition: 'border-color 0.3s'
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        color: colors.neutral.darkGray,
+                        marginBottom: '0.5rem'
                       }}
-                      onFocus={(e) => e.currentTarget.style.borderColor = '#111827'}
-                      onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
                     >
-                      <option value="">Select Type</option>
-                      <option value="new-patient">New Patient</option>
-                      <option value="follow-up">Follow-Up</option>
-                      <option value="consultation">Consultation</option>
-                      <option value="telehealth">Telehealth</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '600',
-                      color: '#374151',
-                      marginBottom: '0.5rem'
-                    }}>
-                      Insurance Provider
+                      Address (Street, City, Zip Code)
                     </label>
                     <input
                       type="text"
-                      name="insurance"
-                      value={formData.insurance}
+                      name="address"
+                      value={formData.address}
                       onChange={handleChange}
-                      placeholder="e.g., Medicare, Blue Cross"
+                      placeholder="Address (Street, City, Zip Code)"
                       style={{
                         width: '100%',
                         padding: '0.75rem 1rem',
-                        border: '1px solid #d1d5db',
-                        borderRadius: '8px',
+                        border: `1px solid ${colors.secondary.borderGray}`,
+                        borderRadius: '4px',
                         fontSize: '1rem',
-                        outline: 'none',
-                        transition: 'border-color 0.3s'
+                        outline: 'none'
                       }}
-                      onFocus={(e) => e.currentTarget.style.borderColor = '#111827'}
-                      onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
                     />
                   </div>
-                </div>
 
-                {/* Message */}
-                <div>
-                  <label style={{
-                    display: 'block',
-                    fontSize: '0.875rem',
-                    fontWeight: '600',
-                    color: '#374151',
-                    marginBottom: '0.5rem'
-                  }}>
-                    Message
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    placeholder="Tell us about your wound care needs or questions..."
+                  <div>
+                    <label
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        color: colors.neutral.darkGray,
+                        marginBottom: '0.5rem'
+                      }}
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={5}
+                      placeholder="Message"
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        border: `1px solid ${colors.secondary.borderGray}`,
+                        borderRadius: '4px',
+                        fontSize: '1rem',
+                        outline: 'none',
+                        resize: 'vertical',
+                        fontFamily: 'inherit'
+                      }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
                     style={{
-                      width: '100%',
-                      padding: '0.75rem 1rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '8px',
+                      backgroundColor: colors.primary.navy,
+                      color: colors.primary.white,
+                      padding: '1rem 2rem',
+                      borderRadius: '4px',
+                      fontWeight: 'bold',
                       fontSize: '1rem',
-                      outline: 'none',
-                      resize: 'vertical',
-                      fontFamily: 'inherit',
-                      transition: 'border-color 0.3s'
+                      border: 'none',
+                      cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                      transition: 'all 0.3s',
+                      opacity: isSubmitting ? 0.7 : 1
                     }}
-                    onFocus={(e) => e.currentTarget.style.borderColor = '#111827'}
-                    onBlur={(e) => e.currentTarget.style.borderColor = '#d1d5db'}
-                  />
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={{
-                    background: colors.gradients.blueGreen,
-                    color: '#ffffff',
-                    padding: '1rem 2rem',
-                    borderRadius: '8px',
-                    fontWeight: 'bold',
-                    fontSize: '1rem',
-                    border: `2px solid ${colors.primary.blue}`,
-                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                    transition: 'all 0.3s',
-                    opacity: isSubmitting ? 0.7 : 1,
-                    boxShadow: `0 4px 12px rgba(8, 145, 220, 0.3)`
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isSubmitting) {
-                      e.currentTarget.style.background = colors.secondary.lightBlue;
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 6px 16px rgba(8, 145, 220, 0.4)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = colors.gradients.blueGreen;
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(8, 145, 220, 0.3)';
-                  }}
-                >
-                  {isSubmitting ? 'Sending...' : 'Submit Request'}
-                </button>
-
-                {/* Status Messages */}
-                {submitStatus === 'success' && (
-                  <div style={{
-                    padding: '1rem',
-                    backgroundColor: '#d1fae5',
-                    border: '1px solid #6ee7b7',
-                    borderRadius: '8px',
-                    color: '#065f46',
-                    fontSize: '0.875rem'
-                  }}>
-                    Thank you! We've received your request and will contact you within 24 hours.
-                  </div>
-                )}
-
-                {submitStatus === 'error' && (
-                  <div style={{
-                    padding: '1rem',
-                    backgroundColor: '#fee2e2',
-                    border: '1px solid #fca5a5',
-                    borderRadius: '8px',
-                    color: '#991b1b',
-                    fontSize: '0.875rem'
-                  }}>
-                    Sorry, there was an error submitting your request. Please try again or call us directly.
-                  </div>
-                )}
-              </form>
-            </div>
-
-            {/* Right: Additional Information */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '2rem' : '3rem' }}>
-              {/* Interactive Map */}
-              <div>
-                <h3 style={{
-                  fontSize: isMobile ? '1.5rem' : '2rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1.5rem'
-                }}>
-                  Visit Our Clinic
-                </h3>
-                <div style={{
-                  width: '100%',
-                  height: isMobile ? '250px' : '300px',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
-                }}>
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3020.5!2d-75.2063!3d40.8653!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c43e5d5c5d5d5d%3A0x5d5d5d5d5d5d5d5d!2s55R%20Broadway%2C%20Bangor%2C%20PA%2018013!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Stratum Wound Care Location"
-                  />
-                </div>
-                <p style={{
-                  marginTop: '1rem',
-                  fontSize: '0.875rem',
-                  color: '#6b7280',
-                  textAlign: 'center'
-                }}>
-                  <a
-                    href="https://www.google.com/maps/search/?api=1&query=55R+Broadway+Bangor+PA+18013"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      color: colors.primary.blue,
-                      textDecoration: 'underline',
-                      fontWeight: '600'
+                    onMouseEnter={(e) => {
+                      if (!isSubmitting) {
+                        e.currentTarget.style.backgroundColor = colors.secondary.darkNavy;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = colors.primary.navy;
                     }}
                   >
-                    Open in Google Maps →
-                  </a>
-                </p>
+                    {isSubmitting ? 'Sending...' : 'Send'}
+                  </button>
+
+                  <p
+                    style={{
+                      fontSize: '0.75rem',
+                      color: colors.secondary.mediumGray,
+                      textAlign: 'center',
+                      marginTop: '-0.5rem'
+                    }}
+                  >
+                    This site is protected by reCAPTCHA and the Google{' '}
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style={{ color: colors.primary.navy, textDecoration: 'underline' }}>Privacy Policy</a>
+                    {' '}and{' '}
+                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" style={{ color: colors.primary.navy, textDecoration: 'underline' }}>Terms of Service</a>
+                    {' '}apply.
+                  </p>
+
+                  {submitStatus === 'success' && (
+                    <div
+                      style={{
+                        padding: '1rem',
+                        backgroundColor: '#d1fae5',
+                        border: '1px solid #6ee7b7',
+                        borderRadius: '4px',
+                        color: '#065f46',
+                        fontSize: '0.875rem'
+                      }}
+                    >
+                      Thank you! We'll get back to you soon.
+                    </div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <div
+                      style={{
+                        padding: '1rem',
+                        backgroundColor: '#fee2e2',
+                        border: '1px solid #fca5a5',
+                        borderRadius: '4px',
+                        color: '#991b1b',
+                        fontSize: '0.875rem'
+                      }}
+                    >
+                      Error sending message. Please try again.
+                    </div>
+                  )}
+                </form>
               </div>
 
-              {/* Telehealth Section */}
-              <div style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '2rem' : '2.5rem',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
-              }} id="telehealth">
-                <div style={{ marginBottom: '1rem' }}>
-                  <Icon type="monitor" size={48} color="#6b7280" />
-                </div>
-                <h3 style={{
-                  fontSize: isMobile ? '1.5rem' : '1.75rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1rem'
-                }}>
-                  Telehealth Visits
-                </h3>
-                <p style={{
-                  color: '#374151',
-                  fontSize: isMobile ? '1rem' : '1.125rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1.5rem'
-                }}>
-                  Schedule a virtual consultation with our wound care specialists from the comfort of your home. Available Monday through Friday.
-                </p>
-                <Link
-                  href="/contact"
+              {/* Contact Information */}
+              <div>
+                <h2
+                  className="font-bold mb-4"
                   style={{
-                    display: 'inline-block',
-                    backgroundColor: colors.primary.navy,
-                    color: '#ffffff',
-                    padding: '0.875rem 1.5rem',
-                    borderRadius: '8px',
-                    fontWeight: '600',
-                    fontSize: '1rem',
-                    textDecoration: 'none',
-                    transition: 'all 0.3s'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#374151';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#111827';
+                    fontSize: isMobile ? '1.75rem' : '2rem',
+                    color: colors.primary.navy
                   }}
                 >
-                  Schedule Telehealth Visit →
-                </Link>
-              </div>
+                  Call For A Free Quote!
+                </h2>
+                <p
+                  style={{
+                    fontSize: isMobile ? '0.9375rem' : '1rem',
+                    color: colors.secondary.mediumGray,
+                    lineHeight: '1.7',
+                    marginBottom: '2rem'
+                  }}
+                >
+                  We strive to be in constant communication with our customers. To get a free quote, or if you have questions or special requests, just drop us an email or text. We look forward to working with you.
+                </p>
 
-              {/* Parking & Accessibility */}
-              <div style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '12px',
-                padding: isMobile ? '2rem' : '2.5rem',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
-              }}>
-                <h3 style={{
-                  fontSize: isMobile ? '1.5rem' : '1.75rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '1.5rem'
-                }}>
-                  Facility Information
-                </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'start', gap: '1rem' }}>
-                    <Icon type="car" size={32} color="#6b7280" />
-                    <div>
-                      <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827', marginBottom: '0.25rem' }}>
-                        Parking
-                      </h4>
-                      <p style={{ fontSize: '1rem', color: '#6b7280' }}>
-                        Free on-site parking available
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                  <div>
+                    <h3
+                      className="font-bold mb-3"
+                      style={{
+                        fontSize: isMobile ? '1.25rem' : '1.5rem',
+                        color: colors.primary.navy
+                      }}
+                    >
+                      Kim Electric LLC.
+                    </h3>
+                    <div style={{ fontSize: isMobile ? '0.9375rem' : '1rem', color: colors.secondary.mediumGray, lineHeight: '1.8' }}>
+                      <p style={{ marginBottom: '0.75rem' }}>
+                        <strong>Mailing Address:</strong> 74 W. Edsall Blvd. #B, Palisades Park, New Jersey 07650, United States
+                      </p>
+                      <p style={{ marginBottom: '0.75rem' }}>
+                        <a href="mailto:kimelectricllc.us@gmail.com" style={{ color: colors.primary.navy, textDecoration: 'underline' }}>
+                          kimelectricllc.us@gmail.com
+                        </a>
+                      </p>
+                      <p>
+                        <a href="tel:2019195006" style={{ color: colors.primary.navy, fontWeight: 'bold', textDecoration: 'none' }}>
+                          (201) 919-5006
+                        </a>
                       </p>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'start', gap: '1rem' }}>
-                    <Icon type="accessibility" size={32} color="#6b7280" />
-                    <div>
-                      <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827', marginBottom: '0.25rem' }}>
-                        Accessibility
-                      </h4>
-                      <p style={{ fontSize: '1rem', color: '#6b7280' }}>
-                        Wheelchair accessible facility
-                      </p>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'start', gap: '1rem' }}>
-                    <Icon type="bus" size={32} color="#6b7280" />
-                    <div>
-                      <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827', marginBottom: '0.25rem' }}>
-                        Public Transit
-                      </h4>
-                      <p style={{ fontSize: '1rem', color: '#6b7280' }}>
-                        Bus stop on Main Street
-                      </p>
+                  <div>
+                    <h3
+                      className="font-bold mb-3"
+                      style={{
+                        fontSize: isMobile ? '1.25rem' : '1.5rem',
+                        color: colors.primary.navy
+                      }}
+                    >
+                      Hours
+                    </h3>
+                    <div style={{ fontSize: isMobile ? '0.9375rem' : '1rem', color: colors.secondary.mediumGray, lineHeight: '1.8' }}>
+                      <p style={{ marginBottom: '0.5rem' }}>Monday - Friday: 8am - 6pm</p>
+                      <p>Saturday - Sunday: Closed</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Emergency Protocol Section */}
-      <section style={{
-        backgroundColor: '#dc2626',
-        paddingTop: isMobile ? '2rem' : '3rem',
-        paddingBottom: isMobile ? '2rem' : '3rem'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          paddingLeft: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          paddingRight: isMobile ? '1.5rem' : isTablet ? '2.5rem' : '4rem',
-          textAlign: 'center'
-        }}>
-          <h2 style={{
-            fontSize: isMobile ? '1.75rem' : '2.5rem',
-            fontWeight: 'bold',
-            color: '#ffffff',
-            marginBottom: '1rem'
-          }}>
-            Medical Emergency?
-          </h2>
-          <p style={{
-            fontSize: isMobile ? '1rem' : '1.25rem',
-            color: '#fecaca',
-            marginBottom: '1.5rem',
-            maxWidth: '800px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}>
-            For life-threatening emergencies, call 911 immediately. For urgent wound care needs after hours, call our emergency line.
-          </p>
-          <a
-            href="tel:555-123-9999"
+        {/* Payment Information Section */}
+        <section
+          style={{
+            paddingTop: isMobile ? '3rem' : '4rem',
+            paddingBottom: isMobile ? '3rem' : '4rem',
+            backgroundColor: colors.neutral.offWhite
+          }}
+        >
+          <div
             style={{
-              display: 'inline-block',
-              backgroundColor: '#ffffff',
-              color: '#dc2626',
-              padding: isMobile ? '1rem 2rem' : '1.25rem 3rem',
-              borderRadius: '8px',
-              fontWeight: 'bold',
-              fontSize: isMobile ? '1.125rem' : '1.25rem',
-              textDecoration: 'none',
-              transition: 'all 0.3s',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto'
             }}
           >
-            Call Emergency Line: (555) 123-9999
-          </a>
-        </div>
-      </section>
-    </div>
+            <div
+              style={{
+                backgroundColor: colors.primary.white,
+                padding: isMobile ? '2rem' : '3rem',
+                borderRadius: '4px',
+                border: `2px solid ${colors.secondary.borderGray}`,
+                borderLeft: `6px solid ${colors.primary.navy}`,
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                textAlign: 'center'
+              }}
+            >
+              <p
+                style={{
+                  fontSize: isMobile ? '0.9375rem' : '1rem',
+                  color: colors.secondary.mediumGray,
+                  lineHeight: '1.7'
+                }}
+              >
+                *Please make checks payable to <strong style={{ color: colors.primary.navy }}>"Kim Electric LLC"</strong> and Zelle payments to{' '}
+                <strong style={{ color: colors.primary.navy }}>"201-919-5006"</strong> or{' '}
+                <a href="mailto:kimelectricllc.us@gmail.com" style={{ color: colors.primary.navy, textDecoration: 'underline', fontWeight: '600' }}>
+                  "kimelectricllc.us@gmail.com"
+                </a>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Licensing Section */}
+        <section
+          style={{
+            paddingTop: isMobile ? '3rem' : '4rem',
+            paddingBottom: isMobile ? '3rem' : '4rem',
+            backgroundColor: colors.primary.navy,
+            color: colors.primary.white
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: isMobile ? '1.5rem' : '3rem',
+              paddingRight: isMobile ? '1.5rem' : '3rem',
+              maxWidth: '1200px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              textAlign: 'center'
+            }}
+          >
+            <h2
+              className="font-bold mb-6"
+              style={{
+                fontSize: isMobile ? '1.75rem' : '2.5rem'
+              }}
+            >
+              Licensed & Certified
+            </h2>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                fontSize: isMobile ? '1rem' : '1.125rem'
+              }}
+            >
+              <p>State of New Jersey Fire Protection Contractor Permit No. P01654</p>
+              <p>NJ HIC License No. 13VH12649700</p>
+            </div>
+          </div>
+        </section>
+      </div>
     </PageTransition>
   );
 }
