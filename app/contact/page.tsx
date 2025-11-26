@@ -95,6 +95,45 @@ export default function ContactPage() {
                   Send Message
                 </h2>
 
+                {submitStatus === 'success' && (
+                  <div
+                    style={{
+                      padding: '1rem',
+                      backgroundColor: '#d1fae5',
+                      border: '1px solid #6ee7b7',
+                      borderRadius: '4px',
+                      color: '#065f46',
+                      fontSize: '0.875rem',
+                      marginBottom: '1rem'
+                    }}
+                  >
+                    Thank you! We'll get back to you soon.
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div
+                    style={{
+                      padding: '1rem',
+                      backgroundColor: '#fee2e2',
+                      border: '1px solid #fca5a5',
+                      borderRadius: '4px',
+                      color: '#991b1b',
+                      fontSize: '0.875rem',
+                      marginBottom: '1rem'
+                    }}
+                  >
+                    Unable to send message. Please contact us directly at{' '}
+                    <a href="mailto:kimelectricllc.us@gmail.com" style={{ color: '#991b1b', textDecoration: 'underline', fontWeight: 'bold' }}>
+                      kimelectricllc.us@gmail.com
+                    </a>
+                    {' '}or call{' '}
+                    <a href="tel:2019195006" style={{ color: '#991b1b', textDecoration: 'underline', fontWeight: 'bold' }}>
+                      (201) 919-5006
+                    </a>.
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   <div>
                     <label
@@ -230,36 +269,6 @@ export default function ContactPage() {
                     <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" style={{ color: colors.primary.navy, textDecoration: 'underline' }}>Terms of Service</a>
                     {' '}apply.
                   </p>
-
-                  {submitStatus === 'success' && (
-                    <div
-                      style={{
-                        padding: '1rem',
-                        backgroundColor: '#d1fae5',
-                        border: '1px solid #6ee7b7',
-                        borderRadius: '4px',
-                        color: '#065f46',
-                        fontSize: '0.875rem'
-                      }}
-                    >
-                      Thank you! We'll get back to you soon.
-                    </div>
-                  )}
-
-                  {submitStatus === 'error' && (
-                    <div
-                      style={{
-                        padding: '1rem',
-                        backgroundColor: '#fee2e2',
-                        border: '1px solid #fca5a5',
-                        borderRadius: '4px',
-                        color: '#991b1b',
-                        fontSize: '0.875rem'
-                      }}
-                    >
-                      Error sending message. Please try again.
-                    </div>
-                  )}
                 </form>
               </div>
 
@@ -311,36 +320,6 @@ export default function ContactPage() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Payment Information Section */}
-        <section className="section-padding" style={{ backgroundColor: colors.neutral.offWhite }}>
-          <div className="container-responsive">
-            <div
-              className="card-padding text-center"
-              style={{
-                backgroundColor: colors.primary.white,
-                borderRadius: '4px',
-                border: `2px solid ${colors.secondary.borderGray}`,
-                borderLeft: `6px solid ${colors.primary.navy}`,
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
-              }}
-            >
-              <p
-                className="text-base"
-                style={{
-                  color: colors.secondary.mediumGray,
-                  lineHeight: '1.7'
-                }}
-              >
-                *Please make checks payable to <strong style={{ color: colors.primary.navy }}>"Kim Electric LLC"</strong> and Zelle payments to{' '}
-                <strong style={{ color: colors.primary.navy }}>"201-919-5006"</strong> or{' '}
-                <a href="mailto:kimelectricllc.us@gmail.com" style={{ color: colors.primary.navy, textDecoration: 'underline', fontWeight: '600' }}>
-                  "kimelectricllc.us@gmail.com"
-                </a>.
-              </p>
             </div>
           </div>
         </section>

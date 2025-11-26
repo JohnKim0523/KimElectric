@@ -143,7 +143,7 @@ export default function Home() {
                   letterSpacing: '-0.02em'
                 }}
               >
-                Fire Protection
+                Fire Alarm System Company
               </h1>
               {/* Decorative divider line */}
               <div
