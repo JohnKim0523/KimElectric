@@ -1,7 +1,17 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useMemo } from 'react';
 import { colors } from '@/lib/colors';
+
+// Stripe fee: 2.9% + $0.30
+const STRIPE_PERCENT_FEE = 0.029;
+const STRIPE_FIXED_FEE = 0.30;
+
+// Calculate total amount that covers the Stripe fee
+function calculateTotalWithFee(invoiceAmount: number): number {
+  // Formula: total = (invoice + fixed_fee) / (1 - percent_fee)
+  return (invoiceAmount + STRIPE_FIXED_FEE) / (1 - STRIPE_PERCENT_FEE);
+}
 
 interface PaymentDetailsFormProps {
   onCancel: () => void;
@@ -16,20 +26,34 @@ export default function PaymentDetailsForm({ onCancel, onClientSecretReady }: Pa
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Calculate the total with processing fee
+  const { totalAmount, processingFee } = useMemo(() => {
+    const invoiceAmount = parseFloat(amount);
+    if (isNaN(invoiceAmount) || invoiceAmount <= 0) {
+      return { totalAmount: 0, processingFee: 0 };
+    }
+    const total = calculateTotalWithFee(invoiceAmount);
+    const fee = total - invoiceAmount;
+    return {
+      totalAmount: Math.round(total * 100) / 100,
+      processingFee: Math.round(fee * 100) / 100
+    };
+  }, [amount]);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
     setErrorMessage('');
 
     try {
-      // Create payment intent
+      // Create payment intent with the total amount (including processing fee)
       const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: parseFloat(amount),
+          amount: totalAmount,
           description,
           customerEmail,
           customerName,
@@ -42,7 +66,7 @@ export default function PaymentDetailsForm({ onCancel, onClientSecretReady }: Pa
         throw new Error(data.error || 'Failed to initialize payment');
       }
 
-      onClientSecretReady(data.clientSecret, amount, customerName, customerEmail);
+      onClientSecretReady(data.clientSecret, totalAmount.toFixed(2), customerName, customerEmail);
     } catch (error: any) {
       setErrorMessage(error.message || 'Failed to initialize payment');
     } finally {
@@ -166,6 +190,42 @@ export default function PaymentDetailsForm({ onCancel, onClientSecretReady }: Pa
             }}
           />
         </div>
+
+        {/* Fee Breakdown */}
+        {totalAmount > 0 && (
+          <div
+            style={{
+              padding: '1rem',
+              backgroundColor: '#f8fafc',
+              border: `1px solid ${colors.secondary.borderGray}`,
+              borderRadius: '4px',
+            }}
+          >
+            <div style={{ fontSize: '0.875rem', color: colors.neutral.darkGray }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                <span>Invoice Amount:</span>
+                <span>${parseFloat(amount).toFixed(2)}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                <span>Processing Fee (2.9% + $0.30):</span>
+                <span>${processingFee.toFixed(2)}</span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontWeight: '700',
+                  paddingTop: '0.5rem',
+                  borderTop: `1px solid ${colors.secondary.borderGray}`,
+                  color: colors.primary.navy
+                }}
+              >
+                <span>Total to Charge:</span>
+                <span>${totalAmount.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {errorMessage && (
           <div
