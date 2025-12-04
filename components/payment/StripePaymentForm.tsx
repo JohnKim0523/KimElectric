@@ -7,22 +7,24 @@ import PaymentForm from './PaymentForm';
 import PaymentDetailsForm from './PaymentDetailsForm';
 import { colors } from '@/lib/colors';
 
+type PaymentMethodType = 'card' | 'ach' | 'apple_pay' | 'google_pay';
+
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function StripePaymentForm() {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [clientSecret, setClientSecret] = useState<string>('');
-  const [paymentDetails, setPaymentDetails] = useState({ amount: '', name: '', email: '' });
+  const [paymentDetails, setPaymentDetails] = useState({ amount: '', name: '', email: '', paymentMethod: 'card' as PaymentMethodType });
 
-  const handleClientSecretReady = (secret: string, amount: string, name: string, email: string) => {
+  const handleClientSecretReady = (secret: string, amount: string, name: string, email: string, paymentMethod: PaymentMethodType) => {
     setClientSecret(secret);
-    setPaymentDetails({ amount, name, email });
+    setPaymentDetails({ amount, name, email, paymentMethod });
   };
 
   const handleCancel = () => {
     setShowPaymentForm(false);
     setClientSecret('');
-    setPaymentDetails({ amount: '', name: '', email: '' });
+    setPaymentDetails({ amount: '', name: '', email: '', paymentMethod: 'card' });
   };
 
   return (
@@ -73,6 +75,7 @@ export default function StripePaymentForm() {
             amount={paymentDetails.amount}
             customerName={paymentDetails.name}
             customerEmail={paymentDetails.email}
+            paymentMethod={paymentDetails.paymentMethod}
           />
         </Elements>
       )}

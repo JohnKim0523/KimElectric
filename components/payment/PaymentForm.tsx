@@ -4,15 +4,25 @@ import { useState, FormEvent } from 'react';
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { colors } from '@/lib/colors';
 
+type PaymentMethodType = 'card' | 'ach' | 'apple_pay' | 'google_pay';
+
+const PAYMENT_METHOD_LABELS: Record<PaymentMethodType, string> = {
+  card: 'Credit/Debit Card',
+  ach: 'Bank Transfer (ACH)',
+  apple_pay: 'Apple Pay',
+  google_pay: 'Google Pay'
+};
+
 interface PaymentFormProps {
   onCancel: () => void;
   clientSecret: string;
   amount: string;
   customerName: string;
   customerEmail: string;
+  paymentMethod: PaymentMethodType;
 }
 
-export default function PaymentForm({ onCancel, clientSecret, amount, customerName, customerEmail }: PaymentFormProps) {
+export default function PaymentForm({ onCancel, clientSecret, amount, customerName, customerEmail, paymentMethod }: PaymentFormProps) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -101,6 +111,9 @@ export default function PaymentForm({ onCancel, clientSecret, amount, customerNa
                 <strong>Amount:</strong> ${parseFloat(amount).toFixed(2)}
               </p>
               <p style={{ fontSize: '0.875rem', color: colors.secondary.mediumGray }}>
+                <strong>Payment Method:</strong> {PAYMENT_METHOD_LABELS[paymentMethod]}
+              </p>
+              <p style={{ fontSize: '0.875rem', color: colors.secondary.mediumGray }}>
                 <strong>Name:</strong> {customerName}
               </p>
               <p style={{ fontSize: '0.875rem', color: colors.secondary.mediumGray }}>
@@ -108,7 +121,14 @@ export default function PaymentForm({ onCancel, clientSecret, amount, customerNa
               </p>
             </div>
 
-            <PaymentElement />
+            <PaymentElement
+              options={{
+                wallets: {
+                  applePay: 'never',
+                  googlePay: 'never'
+                }
+              }}
+            />
           </div>
 
           {errorMessage && (
