@@ -31,17 +31,17 @@ export default function Home() {
     { name: '46 Plaza (Palisades Park)', description: 'Fire alarm system monitoring', image: '/project1.webp' },
     { name: 'Myung Dong Noodle House (Fort Lee)', description: 'Fire alarm installation and monitoring', image: '/project2.webp' },
     { name: 'Hey Yogurt (Hoboken & Palisades Park)', description: 'Fire alarm system monitoring', image: '/project3.webp' },
-    { name: 'Superfresh Supermarket (Perth Amboy)', description: 'Fire alarm system monitoring', image: '/project4.webp' },
+    { name: '20-26 S. Broad St. (Ridgewood)', description: 'Fire alarm monitoring', image: '/project4.webp' },
     { name: 'Galleria Plaza (Palisades Park)', description: 'Fire alarm system monitoring', image: '/project5.webp' },
     { name: 'Galleria 10 (Parsippany)', description: 'Fire alarm system installation and monitoring', image: '/project6.webp' },
-    { name: 'SSUM Café & Karaoke (Palisades Park)', description: 'Fire alarm system installation and monitoring', image: '/project7.webp' },
+    { name: '6-14 S. Broad St. (Ridgewood)', description: 'Fire alarm monitoring', image: '/project7.webp' },
     { name: 'Dream Pharmacy (Palisades Park)', description: 'HVAC and lighting installation', image: '/project8.webp' },
     { name: 'BBQ Chicken (Closter)', description: 'New construction, electric and HVAC', image: '/project9.webp' },
     { name: 'Animal Care of Closter (Closter)', description: 'New construction, electric, HVAC', image: '/project10.webp' },
     { name: 'MC Creations (Hackensack)', description: 'Two 15-ton commercial air condenser unit installation', image: '/project11.webp' },
     { name: '10 Court Tennis Facility (Hackensack)', description: 'Lighting, electrical and fire alarm system installation', image: '/project12.webp' },
-    { name: '6-14 S. Broad St. (Ridgewood)', description: 'Fire alarm monitoring', image: '/project13.webp' },
-    { name: '20-26 S. Broad St. (Ridgewood)', description: 'Fire alarm monitoring', image: '/project14.webp' }
+    { name: 'SSUM Café & Karaoke (Palisades Park)', description: 'Fire alarm system installation and monitoring', image: '/project13.webp' },
+    { name: 'Superfresh Supermarket (Perth Amboy)', description: 'Fire alarm system monitoring', image: '/project14.webp' }
   ];
 
   // Auto-advance carousel with timer reset
@@ -243,6 +243,7 @@ export default function Home() {
 
                   // Get card width as string
                   const getCardWidth = () => {
+                    if (isMobile) return '90%'; // Full width on mobile
                     return `${getCardWidthNum(index)}%`;
                   };
 
@@ -277,13 +278,13 @@ export default function Home() {
                       style={{
                         position: 'absolute',
                         width: getCardWidth(),
-                        height: (index === 2 || index === 4 || index === 8) ? 'auto' : (isMobile ? '480px' : '600px'),
-                        maxHeight: (index === 2 || index === 4 || index === 8) ? (isMobile ? '480px' : '600px') : undefined,
+                        height: isMobile ? 'auto' : ((index === 2 || index === 4 || index === 8) ? 'auto' : '600px'),
+                        maxHeight: isMobile ? '480px' : ((index === 2 || index === 4 || index === 8) ? '600px' : undefined),
                         left: getLeftPosition(),
                         top: '50%',
                         transform: `translate(-50%, -50%) scale(${isActive ? 1 : Math.abs(offset) === 1 ? 0.88 : 0.75})`,
                         transition: 'left 0.8s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1)',
-                        opacity: isActive ? 1 : Math.abs(offset) === 1 ? 0.5 : 0,
+                        opacity: isMobile ? (isActive ? 1 : 0) : (isActive ? 1 : Math.abs(offset) === 1 ? 0.5 : 0),
                         pointerEvents: isActive ? 'auto' : 'none',
                         display: 'flex',
                         flexDirection: 'column',
