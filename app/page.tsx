@@ -39,7 +39,9 @@ export default function Home() {
     { name: 'BBQ Chicken (Closter)', description: 'New construction, electric and HVAC', image: '/project9.webp' },
     { name: 'Animal Care of Closter (Closter)', description: 'New construction, electric, HVAC', image: '/project10.webp' },
     { name: 'MC Creations (Hackensack)', description: 'Two 15-ton commercial air condenser unit installation', image: '/project11.webp' },
-    { name: '10 Court Tennis Facility (Hackensack)', description: 'Lighting, electrical and fire alarm system installation', image: '/project12.webp' }
+    { name: '10 Court Tennis Facility (Hackensack)', description: 'Lighting, electrical and fire alarm system installation', image: '/project12.webp' },
+    { name: '6-14 S. Broad St. (Ridgewood)', description: 'Fire alarm monitoring', image: '/project13.webp' },
+    { name: '20-26 S. Broad St. (Ridgewood)', description: 'Fire alarm monitoring', image: '/project14.webp' }
   ];
 
   // Auto-advance carousel with timer reset
