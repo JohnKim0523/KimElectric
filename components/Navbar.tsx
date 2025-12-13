@@ -2,16 +2,44 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { colors } from '@/lib/colors';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownClosing, setIsDropdownClosing] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === '/';
+  const navRef = useRef<HTMLElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (
+        isMobileMenuOpen &&
+        !isDropdownClosing &&
+        navRef.current &&
+        !navRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownClosing(true);
+        setTimeout(() => {
+          setIsMobileMenuOpen(false);
+          setIsDropdownClosing(false);
+        }, 250);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isMobileMenuOpen, isDropdownClosing]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,6 +102,7 @@ export default function Navbar() {
 
       {/* Main Navigation */}
       <nav
+        ref={navRef}
         className="navbar-main"
         style={{
           ...(isHomePage
@@ -165,7 +194,18 @@ export default function Navbar() {
 
               {/* Mobile Menu Button */}
               <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={() => {
+                  if (isMobileMenuOpen) {
+                    // Start closing animation
+                    setIsDropdownClosing(true);
+                    setTimeout(() => {
+                      setIsMobileMenuOpen(false);
+                      setIsDropdownClosing(false);
+                    }, 250); // Match the animation duration
+                  } else {
+                    setIsMobileMenuOpen(true);
+                  }
+                }}
                 className="navbar-mobile-menu"
                 aria-label="Toggle mobile menu"
               >
@@ -176,8 +216,10 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        {isMobile && isMobileMenuOpen && (
-          <div className="navbar-mobile-dropdown">
+        {isMobile && (
+          <div
+            className={`navbar-mobile-dropdown ${isMobileMenuOpen ? 'dropdown-open' : ''} ${isDropdownClosing ? 'dropdown-closing' : ''}`}
+          >
             {[...leftNavLinks, ...rightNavLinks].map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -186,7 +228,13 @@ export default function Navbar() {
                   href={link.href}
                   className={`navbar-link ${isActive ? 'navbar-link-active' : ''}`}
                   style={{ color: isActive ? colors.primary.navy : '#6B7280' }}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsDropdownClosing(true);
+                    setTimeout(() => {
+                      setIsMobileMenuOpen(false);
+                      setIsDropdownClosing(false);
+                    }, 250);
+                  }}
                 >
                   {link.label}
                 </Link>

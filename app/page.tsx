@@ -323,7 +323,8 @@ export default function Home() {
                               style={{
                                 width: '100%',
                                 height: (index === 2 || index === 4 || index === 8) ? 'auto' : '100%',
-                                objectFit: (index === 2 || index === 4 || index === 8) ? undefined : 'cover',
+                                maxHeight: (isMobile && index === 8) ? '280px' : undefined,
+                                objectFit: (isMobile && index === 8) ? 'cover' : ((index === 2 || index === 4 || index === 8) ? undefined : 'cover'),
                                 display: 'block',
                                 opacity: isActive ? 1 : 0.95,
                                 transition: 'opacity 0.8s ease-in-out'
